@@ -1,0 +1,251 @@
+<ion-view view-title="Browse" class="black-theme">
+    <ion-header-bar align-title="center" class="bar-dark">
+<!--       <div class="buttons">
+            <button class="year1" ng-style="{'font-size':'2vw'}">{{year1}}</button> &nbsp&nbsp
+            <select ng-model="year2" class="button button-positive" ng-options="name as name for name in years" ng-change="updateYear2(year2)" ng-style="{'font-size':'2vw'}">
+              </select>
+        </div> -->
+            <!-- <div class="buttons">
+            <select ng-model="year2" class="button" ng-options="name as name for name in years" ng-change="updateYear2(year2)" >
+              </select>
+      </div> -->
+      <h1 class="title">Анализ оценки</h1>
+<!--       <div class="buttons">
+
+            <button class="button button-icon ion-more" ng-click="popover.show($event)"> -->
+        </button>
+          	<i class="button button-icon ion-android-refresh small" style="color:#ffffff;"></i>
+      </div>
+    </ion-header-bar>
+  <ion-content class="black-theme" scroll="true">
+
+<div ng-show="show">
+
+<div class="row padding-h">
+	<div class="col">
+		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{selectedItem.name}}</h4>
+		<h5 class="black-theme" ng-style="{'font-size':'1.3vw'}">{{pretitle}}</h5>
+		<h5 class="black-theme" ng-style="{'font-size':'1.1vw'}">Простои 2015-2016 (тыс. маш-час)</h5>
+	</div>
+	<div class="col text-right">
+		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{currentDay}} {{currentMonth}} 2015-2016</h4>
+	</div>
+</div>
+
+<div class="row">
+		<div class="col">
+
+			<div class="list">
+    			<div class="item black-top-list">
+		  			<i class=" ion-stats-bars big-2 color-danger-graph"></i>
+		  			<h ng-style="{'font-size':'1.7vw'}">{{selectedItem.v1 | number:2}}</h>
+		  			<br>
+		  			<i class="ion-ios-barcode-outline big-2"></i>
+		  			{{selectedItem.v2 | number:2}}
+    			</div>
+    			<div class="item black-top-list">
+					<span ng-if="(selectedItem.v1-selectedItem.v2) > 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
+					<span ng-if="(selectedItem.v1-selectedItem.v2) <= 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
+		  			<h ng-style="{'font-size':'1.7vw'}">{{selectedItem.v1-selectedItem.v2 | number:2}} </h>
+		  			<br>
+		  			Отклонение
+    			</div>
+    			<div class="item black-top-list">
+					<span ng-if="(((selectedItem.v1-selectedItem.v2)/ selectedItem.v1 * 100) > 0) && (selectedItem.v1 != 0)"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
+					<span ng-if="(((selectedItem.v1-selectedItem.v2)/ selectedItem.v1 * 100) <= 0) && (selectedItem.v1 != 0)"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
+	  			 	<span ng-if="((selectedItem.v1-selectedItem.v2)/ selectedItem.v1 * 100) > 0">
+	  			 	<h ng-style="{'font-size':'1.7vw'}"> + {{(selectedItem.v1-selectedItem.v2) / selectedItem.v1 * 100 | number:2}} % </h>
+	  			 	<br>
+		  			Отклонение
+	  			 	</span>
+
+
+					<span ng-if="(((selectedItem.v1-selectedItem.v2)/ selectedItem.v1 * 100) <= 0) && (((selectedItem.v1-selectedItem.v2)/ selectedItem.v1 * 100) > -100000)">
+					<h ng-style="{'font-size':'1.7vw'}"> {{(selectedItem.v1-selectedItem.v2) / selectedItem.v1 * 100 | number:2}} % </h>
+	  			 	<br>
+		  			Отклонение
+
+					</span>
+
+    			</div>
+			</div>
+
+
+		</div>
+
+		<div class="col">
+
+			<div class="list">
+    			<div class="item black-top-list">
+    				<br>
+		  			<h ng-style="{'font-size':'1.7vw'}">{{lastyear1}} %</h>
+		  			<br>
+		  			за {{year1}} год
+    			</div>
+    			<div class="item black-top-list">
+    				<br>
+		  			<h ng-style="{'font-size':'1.7vw'}">{{lastyear2}} %</h>
+		  			<br>
+		  			за {{year2}} год
+
+    			</div>
+			</div>
+
+
+		</div>
+
+		<div class="col col-67">
+
+
+			<canvas id="bar" height="90%" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series" chart-click="onClick" chart-colors="colors" chart-options="options" chart-dataset-override="datasetOverride" chart-legend="true"> </canvas>
+
+
+		</div>
+</div>
+
+
+<div class="row">
+	<div class="col">
+
+		<ul><li><div class="black-mid-list" ng-click="updateData()">
+				Анализ исполнения календарного времени
+				<br>
+				<span ng-if="(b1.v1-b1.v2) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
+				<span ng-if="(b1.v1-b1.v2) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
+
+				<h ng-style="{'font-size':'1.8vw'}">{{b1.v1-b1.v2 | number:1}}</h>
+				<br>
+				<span ng-if="((b1.v1-b1.v2) / b1.v1 * 100) > 0"> + {{(b1.v1-b1.v2) / b1.v1 * 100 | number:1}}% </span>
+				<span ng-if="(((b1.v1-b1.v2) / b1.v1 * 100) <= 0) && (((b1.v1-b1.v2) / b1.v1 * 100) > -100000)">
+				{{(b1.v1-b1.v2) / b1.v1 * 100 | number:1}}% </span>
+				<span ng-if="b1.v1 == 0" >  &nbsp </span>
+
+		</div></li></ul>
+	</div>
+	<div class="col">
+				<ul><li><div class="black-mid-list" ng-click="updateData2()">
+				Анализ готовности ТС
+				<br>
+
+				<span ng-if="(b2.v1-b2.v2) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
+				<span ng-if="(b2.v1-b2.v2) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
+
+				<h ng-style="{'font-size':'1.8vw'}">{{b2.v1-b2.v2 | number:1}}</h>
+				<br>
+				<span ng-if="((b2.v1-b2.v2) / b2.v1 * 100) > 0"> + {{(b2.v1-b2.v2) / b2.v1 * 100 | number:1}}% </span>
+				<span ng-if="(((b2.v1-b2.v2) / b2.v1 * 100) <= 0) && (((b2.v1-b2.v2) / b2.v1 * 100) > -10000)">
+				{{(b2.v1-b2.v2) / b2.v1 * 100 | number:1}}% </span>
+				<span ng-if="b2.v1 == 0" >  &nbsp </span>
+		</div></li></ul>
+	</div>
+		<div class="col">
+		<ul><li><div class="black-mid-list" ng-click="updateData3()">
+				Анализ исполнения внутрисменного времени
+				<br>
+				<span ng-if="((b3.v1-b3.v2)) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
+				<span ng-if="((b3.v1-b3.v2)) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
+
+				<h ng-style="{'font-size':'1.8vw'}">{{b3.v1-b3.v2 | number:1}}</h>
+				<br>
+				<span ng-if="((b3.v1-b3.v2) / b3.v1 * 100) > 0"> + {{(b3.v1-b3.v2) / b3.v1 * 100 | number:1}}% </span>
+				<span ng-if="(((b3.v1-b3.v2) / b3.v1 * 100) <= 0) && (((b3.v1-b3.v2) / b3.v1 * 100) > -10000)">
+				{{(b3.v1-b3.v2) / b3.v1 * 100 | number:1}}% </span>
+				<span ng-if="b3.v1 == 0" >  &nbsp </span>
+		</div></li></ul>
+	</div>
+<!-- 		<div class="col">
+				<ul><li><div class="black-mid-list" ng-click="updateData4()">
+				Анализ по статьям
+				<br>
+
+				<span ng-if="((b4.v1-b4.v2)) > 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
+				<span ng-if="((b4.v1-b4.v2)) <= 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
+
+				<h ng-style="{'font-size':'1.8vw'}">{{b4.v1-b4.v2 | number:1}}</h>
+				<br>
+				<span ng-if="((b4.v1-b4.v2) / b4.v1 * 100) > 0"> + {{(b4.v1-b4.v2) / b4.v1 * 100 | number:1}}% </span>
+				<span ng-if="(((b4.v1-b4.v2) / b4.v1 * 100) <= 0) && (((b4.v1-b4.v2) / b4.v1 * 100) > -10000)">
+				{{(b4.v1-b4.v2) / b4.v1 * 100 | number:1}}% </span>
+				<span ng-if="b4.v1 == 0" >  &nbsp </span>
+		</div></li></ul>
+	</div> -->
+
+</div>
+
+
+
+
+<div class="item item-divider table-heading">
+    <div class="row" ng-style="{'margin-top':'-0.5%'}">
+	      <div class="col" ng-click="sort('name')">
+               <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='name', 'ion-arrow-up-b':!reverse && sortKey=='name'}">&nbspНаименование</i>
+	      </div>
+	      <div class="col" ng-click="sort('v1')">
+                <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v1', 'ion-arrow-up-b':!reverse && sortKey=='v1'}">&nbspПростой с нач.год</i>
+	      </div>
+	      <div class="col" ng-click="sort('v2')">
+              <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v2', 'ion-arrow-up-b':!reverse && sortKey=='v2'}">&nbspОжид. рем</i>
+	      </div>
+	      <div class="col" ng-click="sort('v3')">
+                <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v3', 'ion-arrow-up-b':!reverse && sortKey=='v3'}">&nbspРемонт</i>
+	      </div>
+	      <div class="col" ng-click="sort('v4')">
+              <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v4', 'ion-arrow-up-b':!reverse && sortKey=='v4'}">&nbspНепроизв. простой</i>
+	      </div>
+	      <div class="col" ng-click="sort('v5')">
+              <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v5', 'ion-arrow-up-b':!reverse && sortKey=='v5'}">&nbspОтс. объема работ</i>
+	      </div>
+	      <div class="col" ng-click="sort('v6')">
+                <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v6', 'ion-arrow-up-b':!reverse && sortKey=='v6'}">&nbspНецел.исп</i>
+	      </div>
+	      <div class="col" ng-click="sort('v7')">
+              <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v7', 'ion-arrow-up-b':!reverse && sortKey=='v7'}">&nbspСписание</i>
+	      </div>
+	      <div class="col" ng-click="sort('v8')">
+              <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v8', 'ion-arrow-up-b':!reverse && sortKey=='v8'}">&nbspГараж</i>
+	      </div>	      
+
+    </div>
+</div>
+
+
+<div class="item item-divider table-heading2">
+    <div class="row">
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.name}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v1}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v2}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v3}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v4}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v5}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v6}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v7}} </label> </div>
+	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v8}} </label> </div>
+    </div>
+</div>
+
+
+	<ion-scroll direction="y" ng-style="{height:height+'vh'}" overflow-scroll="false" >
+
+		<div class="item table-content" collection-repeat="item in places|orderBy:sortKey:reverse" item-height="37" ng-click="raw_selected(item.name)">
+	            <div class="row">
+	              <div class="col"><span style="margin-left:7%">{{item.name}} </span></div>
+
+	              <div class="col"><span style="margin-left:7%">{{item.v1}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v2}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v3}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v4}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v5}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v6}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v7}} </span></div>
+	              <div class="col"><span style="margin-left:7%">{{item.v8}} </span></div>
+	            </div>
+	        </div>
+
+	</ion-scroll>
+
+
+
+</div>
+<ion-spinner icon="spiral" ng-show="!show"></ion-spinner>
+  </ion-content>
+</ion-view>

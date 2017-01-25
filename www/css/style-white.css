@@ -1,0 +1,75 @@
+/* Empty. Add your own CSS if you like */
+.text-right{
+     text-align:right;
+}
+.text-left{
+     text-align:left;
+}
+.text-center{
+     text-align:center;
+}
+.small{
+	font-size: 1vw;
+	text-align:center;
+}
+.big{
+	font-size: 5vw;
+	text-align:center;
+}
+.big-2{
+	font-size: 2.5vw;
+	text-align:center;
+}
+.big-35{
+	font-size: 2.5vw;
+	text-align:right;
+}
+.big-15{
+	font-size: 1.5vw;
+	text-align:right;
+}
+.color-danger{
+    color: rgb(243, 20, 94);
+}
+.color-good{
+    color: rgb(20, 243, 121);
+}
+.color-warning{
+    color: rgb(243, 228, 20);
+}
+.interval-small{
+line-height: 1.1;
+}
+.interval-15{
+line-height: 1.5;
+}
+.button{
+	border-color: #dddddd;
+	background-color: #ffffff;
+	width: 95%; 
+}
+.button-active{
+	border-color: #dddddd;
+	background-color: #f8f8f8;
+}
+
+.right {
+    float: right;
+ }
+ .item-input-wrapper {
+    display:block;
+    float:right;
+
+    border-color: #ffffff;
+	background-color: #ffffff;
+}
+
+.row-1{
+    margin-left: 25%;
+}
+.margin-25{
+ margin-top:0%;
+}
+.padding-h{
+	 padding-left: 2%;
+}
