@@ -38,7 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       views: {
         'menuContent': {
           templateUrl: 'templates/dohod.html',
-          controller: 'DohodCtrl'
+          controller: 'BarCtrl'
         }
       }
   })

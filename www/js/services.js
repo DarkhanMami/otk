@@ -166,43 +166,33 @@ angular.module('starter.services', [])
             }
             return obj;
         },
-      getPlaces: function (day, colName1, colName2) {
-          if (day < 10) {
-              day = "0" + day
-          }
-          day = "" + day + "/"+ currentMonthNum +"/2016"
-          var col1 = -1;
-          var col2 = -1;
-          for (k in colNames) {
-              if (colNames[k] == colName1) {
-                  col1 = k;
-              }
-              if (colNames[k] == colName2) {
-                  col2 = k;
-              }
-          }
-          if (col1 == -1 || col2 == -1) {
-              return {
-                  "code": 1,
-                  "message": "Wrong column names"
-              }
-          }
+      getPlaces: function (month) {
           var result = [];
 
           for (i in places) {
               var p = places[i];
-              var key = currentMonth + p + day;
+              var key = month + p;
               if (key in smartData) {
                   var obj = {
                       'name': p,
-                      'v1': smartData[currentMonth + p + day][col1],
-                      'v2': smartData[currentMonth + p + day][col2],
+                      'v1': smartData[month + p][3],
+                      'v2': smartData[month + p][4],
+                      'v3': smartData[month + p][5],
+                      'v4': smartData[month + p][6],
+                      'v5': smartData[month + p][7],
+                      'v6': smartData[month + p][8],
+                      'v7': smartData[month + p][9],
                   }
               } else {
                   var obj = {
                       'name': p,
                       'v1': 0,
                       'v2': 0,
+                      'v3': 0,
+                      'v4': 0,
+                      'v5': 0,
+                      'v6': 0,
+                      'v7': 0,
                   }
               }
               result.push(obj)
@@ -214,31 +204,27 @@ angular.module('starter.services', [])
 
           return colNames;
       },
-      getNumbers: function(name, colName1, colName2) {
-        var col1 = -1;
-        var col2 = -1;
-        for (k in colNames) {
-            if (colNames[k] == colName1) {
-                col1 = k;
+      getNumbers: function(name) {
+        col = 3;
+
+        var r1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var r2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var m1 = 0;
+        var m2 = 0;
+        for (k in monthes) {
+          for (j in fullData[monthes[k]]) {
+            if (fullData[monthes[k]][j][0] == name) {
+                if (fullData[monthes[k]][j][2] == 2016) {
+                  r1[m1] = fullData[monthes[k]][j][3];
+                  m1 = m1 + 1;
+                }
+                if (fullData[monthes[k]][j][2] == 2017) {
+                  r1[m2] = fullData[monthes[k]][j][3];
+                  m2 = m2 + 1;
+                }
+                break;
             }
-            if (colNames[k] == colName2) {
-                col2 = k;
-            }
-        }
-        if (col1 == -1 || col2 == -1) {
-            return {
-                "code": 1,
-                "message": "Wrong column names"
-            }
-        }
-        var r1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        var r2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        for (k in fullData[currentMonth]) {
-            if (fullData[currentMonth][k][0] == name) {
-                var day = parseInt(fullData[currentMonth][k][2].substring(0, 2)) - 1;
-                r1[day] = fullData[currentMonth][k][col1];
-                r2[day] = fullData[currentMonth][k][col2];
-            }
+          }
         }
         return {
             "code": 0,

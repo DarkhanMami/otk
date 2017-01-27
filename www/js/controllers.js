@@ -15,6 +15,204 @@ angular.module('starter.controllers', ['chart.js'])
 
 })
 
+.controller("BarCtrl", function($scope, Data, $ionicLoading, $http, $timeout) {
+    $scope.show = false;
+    var promise = Data.init();
+    // $scope.currentMonth = "";
+    promise.then(function(greeting) {
+        run();
+
+    }, function(reason) {
+        console.log(reason);
+    });
+
+    var run = function() {
+
+
+        $scope.colNames = Data.getColNames();
+        $scope.places = Data.getPlaces("янв");
+        $scope.monthes = Data.getMonthes();
+
+
+        $scope.sortKey = 'name';
+        $scope.reverse = true;
+
+        $scope.sort = function(keyname){
+                $scope.sortKey = keyname;   //set the sortKey to the param passed
+                $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+        };
+
+
+
+
+        $scope.height = screen.height / 36;
+
+        $scope.onClick = function (points, evt) {
+          $scope.places = Data.getPlaces(points[1]._index + 1);
+
+          $scope.date = "" + (points[1]._index + 1) + "/01/2016";
+
+          $scope.currentDay = points[1]._index + 1;
+          $scope.selectedItem = Data.getSingleData($scope.query.name, points[1]._index + 1, $scope.query.colName1, $scope.query.colName2);
+          $scope.selectedItem["name"] = $scope.query.name;
+
+          $scope.$apply();
+        };
+
+
+        $scope.updateData = function(name) {
+    /*
+            $ionicLoading.show({
+              duration: 500,
+              template: '<ion-spinner icon="ios"></ion-spinner>'
+            });
+    */
+            $scope.result = Data.getNumbers(name);
+
+            $scope.data = [
+              $scope.result.r1,
+              $scope.result.r2
+            ];
+
+            angular.forEach($scope.places, function(value, key) {
+              if (value.name == name) {
+                  $scope.selectedItem = {
+                      "name": name,
+                      "v1": value.v1,
+                      "v2": value.v2,
+                      "v3": value.v3,
+                      "v4": value.v4,
+                      "v5": value.v5,
+                      "v6": value.v6,
+                      "v7": value.v7,
+                  }
+              }
+            }, null);
+
+
+            $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+
+            $scope.options = {
+              scales: {
+                yAxes: [
+                  {
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    display: true,
+                    position: 'left'
+                  },
+                  {
+                    id: 'y-axis-2',
+                    type: 'linear',
+                    display: true,
+                    position: 'right'
+                  }
+                ]
+              },
+
+
+              "legend": {
+              "display": false,
+              "position": "top"
+            }
+
+           };
+
+        }
+
+        $scope.updateData($scope.places[0].name);
+
+        $scope.raw_selected = function(name) {
+            console.log('seleted ' + name);
+          $scope.query.name = name;
+          $scope.result = Data.getNumbers(name);
+          console.log($scope.result);
+          $scope.data = [
+              $scope.result.r1,
+              $scope.result.r2
+            ];
+            angular.forEach($scope.places, function(value, key) {
+              if (value.name == name) {
+                  $scope.selectedItem = {
+                      "name": name,
+                      "v1": value.v1,
+                      "v2": value.v2,
+                      "v3": value.v3,
+                      "v4": value.v4,
+                      "v5": value.v5,
+                      "v6": value.v6,
+                      "v7": value.v7,
+                  }
+              }
+            }, null);
+        }
+
+
+      $scope.result = Data.getNumbers($scope.places[0].name);
+
+      $scope.labels = $scope.monthes;
+
+      $scope.series = [$scope.colNames[3], $scope.colNames[3]];
+
+      $scope.data = [
+        $scope.result.r1,
+        $scope.result.r2
+      ];
+
+
+      //$scope.colors = ['#72C02C', '#3498DB', '#717984', '#F1C40F'];
+
+    $scope.colors = [
+                        {
+                            backgroundColor: '#00cc00',
+                            borderColor: '#00cc66',
+                            hoverBackgroundColor: '#A2DED0',
+                            hoverBorderColor: '#A2DED0'
+                        },
+                        {
+                            backgroundColor: '#0066ff',
+                            borderColor: '#3366ff',
+                            hoverBackgroundColor: '#65C6BB',
+                            hoverBorderColor: '#65C6BB'
+                        },
+
+                    ];
+
+
+      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+      $scope.options = {
+        scales: {
+          yAxes: [
+            {
+              id: 'y-axis-1',
+              type: 'linear',
+              display: true,
+              position: 'left'
+            },
+            {
+              id: 'y-axis-2',
+              type: 'linear',
+              display: true,
+              position: 'right'
+            }
+          ]
+        },
+
+
+        "legend": {
+        "display": false,
+        "position": "top"
+      }
+
+      };
+
+
+      $scope.show = true;
+      
+
+    }
+})
+
 .controller('DohodCtrl', function($scope, NalogyData) {
     $scope.show = false;
     var promise = NalogyData.init();
