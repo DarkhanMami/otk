@@ -28,7 +28,7 @@
 		<h5 class="black-theme" ng-style="{'font-size':'1.1vw'}">Доход с нач. года 2015-2016 (млн. тг)</h5>
 	</div>
 	<div class="col text-right">
-		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{currentDay}} {{currentMonth}} 2015-2016</h4>
+		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{currentMonth}} 2015-2016</h4>
 	</div>
 </div>
 
@@ -224,19 +224,19 @@
 <div class="item item-divider table-heading2">
     <div class="row">
 	      <div class="col"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.name}} </label> </div>
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v1}} </label> </div>
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v2}} </label> </div>
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v3}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v1 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v2 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v3 | number:2}} </label> </div>
 	      
-	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v1}} </label> </div>
-	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v2}} </label> </div>
-	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v3}} </label> </div>
-	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v4}} </label> </div>
+	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v1 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v2 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v3 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v4 | number:2}} </label> </div>
 
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v4}} </label> </div>
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v5}} </label> </div>
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v6}} </label> </div>
-	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v7}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v4 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v5 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v6 | number:2}} </label> </div>
+	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><label class="item item-input table-input" ng-style="{'margin-top':'-4%'}"> {{selectedItem.v7 | number:2}} </label> </div>
     </div>
 </div>
 
@@ -247,18 +247,18 @@
 	            <div class="row">
 	              <div class="col"><span style="margin-left:7%">{{item.name}} </span></div>
 
-	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v1}} </span></div>
-	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v2}} </span></div>
-	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v3}} </span></div>
-	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v4}} </span></div>
+	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v1 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v2 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v3 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v4 | number:2}} </span></div>
 
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v1}} </span></div>
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v2}} </span></div>
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v3}} </span></div>
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v4}} </span></div>
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v5}} </span></div>
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v6}} </span></div>
-	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v7}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v1 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v2 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v3 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v4 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v5 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v6 | number:2}} </span></div>
+	              <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям'"><span style="margin-left:7%">{{item.v7 | number:2}} </span></div>
 	            </div>
 	        </div>
 

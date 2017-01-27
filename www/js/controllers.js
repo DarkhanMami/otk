@@ -32,10 +32,13 @@ angular.module('starter.controllers', ['chart.js'])
         $scope.colNames = Data.getColNames();
         $scope.places = Data.getPlaces("янв");
         $scope.monthes = Data.getMonthes();
-
+        $scope.currentMonth = $scope.monthes[0];
+        $scope.pretitle = "Анализ рентабельности по ТС";
+        $scope.currentMonthIndex = 0;
 
         $scope.sortKey = 'name';
         $scope.reverse = true;
+
 
         $scope.sort = function(keyname){
                 $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -45,28 +48,24 @@ angular.module('starter.controllers', ['chart.js'])
 
 
 
+
         $scope.height = screen.height / 36;
 
         $scope.onClick = function (points, evt) {
-          $scope.places = Data.getPlaces(points[1]._index + 1);
+          $scope.places = Data.getPlaces($scope.monthes[points[1]._index]);
+          $scope.currentMonthIndex = points[1]._index;
+          $scope.currentMonth = $scope.monthes[points[1]._index];
 
-          $scope.date = "" + (points[1]._index + 1) + "/01/2016";
-
-          $scope.currentDay = points[1]._index + 1;
-          $scope.selectedItem = Data.getSingleData($scope.query.name, points[1]._index + 1, $scope.query.colName1, $scope.query.colName2);
-          $scope.selectedItem["name"] = $scope.query.name;
+          // $scope.selectedItem = Data.getSingleData($scope.query.name, points[1]._index + 1, $scope.query.colName1, $scope.query.colName2);
+          // $scope.selectedItem["name"] = $scope.query.name;
 
           $scope.$apply();
         };
 
 
         $scope.updateData = function(name) {
-    /*
-            $ionicLoading.show({
-              duration: 500,
-              template: '<ion-spinner icon="ios"></ion-spinner>'
-            });
-    */
+
+            $scope.pretitle = "Анализ рентабельности по ТС";
             $scope.result = Data.getNumbers(name);
 
             $scope.data = [
@@ -123,14 +122,18 @@ angular.module('starter.controllers', ['chart.js'])
         $scope.updateData($scope.places[0].name);
 
         $scope.raw_selected = function(name) {
-            console.log('seleted ' + name);
-          $scope.query.name = name;
           $scope.result = Data.getNumbers(name);
           console.log($scope.result);
           $scope.data = [
               $scope.result.r1,
               $scope.result.r2
             ];
+
+          $scope.b1 = {
+              v1: $scope.result.r1[$scope.currentMonthIndex],
+              v2: $scope.result.r2[$scope.currentMonthIndex]
+          };
+
             angular.forEach($scope.places, function(value, key) {
               if (value.name == name) {
                   $scope.selectedItem = {
@@ -159,6 +162,23 @@ angular.module('starter.controllers', ['chart.js'])
         $scope.result.r2
       ];
 
+
+      $scope.b1 = {
+          v1: $scope.result.r1[$scope.currentMonthIndex],
+          v2: $scope.result.r2[$scope.currentMonthIndex]
+      };
+      // $scope.b2 = {
+      //     v1: $scope.result.r3[$scope.currentMonthIndex],
+      //     v2: $scope.result.r4[$scope.currentMonthIndex]
+      // };
+      // $scope.b3 = {
+      //     v1: $scope.result.r5[$scope.currentMonthIndex],
+      //     v2: $scope.result.r6[$scope.currentMonthIndex]
+      // };
+      // $scope.b4 = {
+      //     v1: $scope.result.r7[$scope.currentMonthIndex],
+      //     v2: $scope.result.r8[$scope.currentMonthIndex]
+      // };
 
       //$scope.colors = ['#72C02C', '#3498DB', '#717984', '#F1C40F'];
 
@@ -253,79 +273,6 @@ angular.module('starter.controllers', ['chart.js'])
         }
 
 
-
-          $scope.places = [{
-            name: 'TC 1',
-            v1: 398,
-            v2: 16,
-            v3: 14.6,
-            v4: 382,
-            v5: 15.4,
-            v6: 370,
-            v7: 12
-          },
-          {
-            name: 'TC 2',
-            v1: 369,
-            v2: 68,
-            v3: 13.5,
-            v4: 301,
-            v5: 12.1,
-            v6: 289,
-            v7: 12
-          },
-          {
-            name: 'TC 3',
-            v1: 532,
-            v2: 39,
-            v3: 12.9,
-            v4: 313,
-            v5: 12.6,
-            v6: 289,
-            v7: 12
-          },
-          {
-            name: 'TC 4',
-            v1: 341,
-            v2: -4,
-            v3: 12.5,
-            v4: 345,
-            v5: 13.9,
-            v6: 322,
-            v7: 23
-          },
-          {
-            name: 'TC 5',
-            v1: 328,
-            v2: 33,
-            v3: 12.0,
-            v4: 295,
-            v5: 11.9,
-            v6: 272,
-            v7: 23
-          },
-          {
-            name: 'TC 6',
-            v1: 310,
-            v2: 53,
-            v3: 11.4,
-            v4: 257,
-            v5: 10.4,
-            v6: 234,
-            v7: 23
-          },
-          {
-            name: 'TC 7',
-            v1: 154,
-            v2: -11,
-            v3: 5.6,
-            v4: 165,
-            v5: 6.7,
-            v6: 120,
-            v7: 45
-          }
-
-          ];
 
 
           if ($scope.pretitle == "Анализ рентабельности по ТС") {
