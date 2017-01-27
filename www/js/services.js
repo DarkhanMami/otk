@@ -207,8 +207,10 @@ angular.module('starter.services', [])
       getNumbers: function(name) {
         col = 3;
 
-        var r1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        var r2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var r1 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var r2 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var r3 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var r4 = [null, null, null, null, null, null, null, null, null, null, null, null];
         var m1 = 0;
         var m2 = 0;
         for (k in monthes) {
@@ -216,10 +218,14 @@ angular.module('starter.services', [])
             if (fullData[monthes[k]][j][0] == name) {
                 if (fullData[monthes[k]][j][2] == 2016) {
                   r1[m1] = fullData[monthes[k]][j][3];
+                  r3[m1] = fullData[monthes[k]][j][10] * 100;
+                  r3[m1] = parseFloat(Math.round(r3[m1] * 100) / 100).toFixed(2);
                   m1 = m1 + 1;
                 }
                 if (fullData[monthes[k]][j][2] == 2017) {
-                  r1[m2] = fullData[monthes[k]][j][3];
+                  r2[m2] = fullData[monthes[k]][j][3];
+                  r4[m1] = fullData[monthes[k]][j][10] * 100;
+                  r4[m1] = parseFloat(Math.round(r4[m1] * 100) / 100).toFixed(2);
                   m2 = m2 + 1;
                 }
                 break;
@@ -230,7 +236,9 @@ angular.module('starter.services', [])
             "code": 0,
             "message": "SUCCESS",
             "r1": r1,
-            "r2": r2
+            "r2": r2,
+            "r3": r3,
+            "r4": r4
         }
       }
     }

@@ -70,7 +70,9 @@ angular.module('starter.controllers', ['chart.js'])
 
             $scope.data = [
               $scope.result.r1,
-              $scope.result.r2
+              $scope.result.r2,
+              $scope.result.r3,
+              $scope.result.r4
             ];
 
             angular.forEach($scope.places, function(value, key) {
@@ -126,12 +128,16 @@ angular.module('starter.controllers', ['chart.js'])
           console.log($scope.result);
           $scope.data = [
               $scope.result.r1,
-              $scope.result.r2
+              $scope.result.r2,
+              $scope.result.r3,
+              $scope.result.r4
             ];
 
           $scope.b1 = {
               v1: $scope.result.r1[$scope.currentMonthIndex],
-              v2: $scope.result.r2[$scope.currentMonthIndex]
+              v2: $scope.result.r2[$scope.currentMonthIndex],
+              v3: $scope.result.r3[$scope.currentMonthIndex],
+              v4: $scope.result.r4[$scope.currentMonthIndex]
           };
 
             angular.forEach($scope.places, function(value, key) {
@@ -159,13 +165,17 @@ angular.module('starter.controllers', ['chart.js'])
 
       $scope.data = [
         $scope.result.r1,
-        $scope.result.r2
+        $scope.result.r2,
+        $scope.result.r3,
+        $scope.result.r4
       ];
 
 
       $scope.b1 = {
           v1: $scope.result.r1[$scope.currentMonthIndex],
-          v2: $scope.result.r2[$scope.currentMonthIndex]
+          v2: $scope.result.r2[$scope.currentMonthIndex],
+          v3: $scope.result.r3[$scope.currentMonthIndex],
+          v4: $scope.result.r4[$scope.currentMonthIndex]
       };
       // $scope.b2 = {
       //     v1: $scope.result.r3[$scope.currentMonthIndex],
@@ -182,47 +192,61 @@ angular.module('starter.controllers', ['chart.js'])
 
       //$scope.colors = ['#72C02C', '#3498DB', '#717984', '#F1C40F'];
 
-    $scope.colors = [
-                        {
-                            backgroundColor: '#00cc00',
-                            borderColor: '#00cc66',
-                            hoverBackgroundColor: '#A2DED0',
-                            hoverBorderColor: '#A2DED0'
-                        },
-                        {
-                            backgroundColor: '#0066ff',
-                            borderColor: '#3366ff',
-                            hoverBackgroundColor: '#65C6BB',
-                            hoverBorderColor: '#65C6BB'
-                        },
+        $scope.colors = [
+                          {
+                              backgroundColor: '#00cc00',
+                              borderColor: '#00cc66',
+                              hoverBackgroundColor: '#A2DED0',
+                              hoverBorderColor: '#A2DED0'
+                          },
+                          {
+                              backgroundColor: '#0066ff',
+                              borderColor: '#3366ff',
+                              hoverBackgroundColor: '#65C6BB',
+                              hoverBorderColor: '#65C6BB'
+                          },
+                          {
 
-                    ];
+                              borderColor: '#006600'
+                          },
+                          {
+                              borderColor: '#0000cc'
+                          },
 
-
-      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-      $scope.options = {
-        scales: {
-          yAxes: [
-            {
-              id: 'y-axis-1',
-              type: 'linear',
-              display: true,
-              position: 'left'
-            },
-            {
-              id: 'y-axis-2',
-              type: 'linear',
-              display: true,
-              position: 'right'
-            }
-          ]
-        },
+                      ];
 
 
-        "legend": {
-        "display": false,
-        "position": "top"
-      }
+        $scope.datasetOverride = [{ yAxisID: 'y-axis-1',type: 'bar' }, { yAxisID: 'y-axis-1',type: 'bar' }, { yAxisID: 'y-axis-2', type: 'line' }, { yAxisID: 'y-axis-2',type: 'line'}];
+        $scope.options = {
+          scales: {
+            yAxes: [
+              {
+                id: 'y-axis-1',
+                type: 'linear',
+                display: true,
+                position: 'left'
+              },
+              {
+                id: 'y-axis-2',
+                type: 'linear',
+                display: true,
+                position: 'right',
+                // elements: {
+                //     line: {
+                //         fill: false,
+                //         skipNull: true,
+                //         drawNull: false,
+                //     }
+                // }
+              }
+            ]
+          },
+
+
+          "legend": {
+          "display": false,
+          "position": "top"
+        }
 
       };
 

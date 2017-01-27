@@ -43,7 +43,7 @@ def getAttachment(emails):
 
 
 def fileParse():
-    wb = xlrd.open_workbook(DIR + 'Таблица с годом.xls')
+    wb = xlrd.open_workbook(DIR + 'TS.xls')
     sh = wb.sheet_by_index(0)
 
     fullData = dict()
@@ -78,39 +78,44 @@ def fileParse():
             temp.append(row_values[2])
         try:
             float(row_values[3])
-            temp.append(float(row_values[3]))
+            temp.append(float("{0:.2f}".format(row_values[3])))
         except:
             temp.append(row_values[3])
         try:
             float(row_values[4])
-            temp.append(float(row_values[4]))
+            temp.append(float("{0:.2f}".format(row_values[4])))
         except:
             temp.append(row_values[4])
         try:
             float(row_values[5])
-            temp.append(float(row_values[5]))
+            temp.append(float("{0:.2f}".format(row_values[5])))
         except:
             temp.append(row_values[5])
         try:
             float(row_values[6])
-            temp.append(float(row_values[6]))
+            temp.append(float("{0:.2f}".format(row_values[6])))
         except:
             temp.append(row_values[6])
         try:
             float(row_values[7])
-            temp.append(float(row_values[7]))
+            temp.append(float("{0:.2f}".format(row_values[7])))
         except:
             temp.append(row_values[7])
         try:
             float(row_values[8])
-            temp.append(float(row_values[8]))
+            temp.append(float("{0:.2f}".format(row_values[8])))
         except:
             temp.append(row_values[8])
         try:
             float(row_values[9])
-            temp.append(float(row_values[9]))
+            temp.append(float("{0:.2f}".format(row_values[9])))
         except:
             temp.append(row_values[9])
+        try:
+            float(row_values[10])
+            temp.append(float("{0:.2f}".format(row_values[10])))
+        except:
+            temp.append(row_values[10])
 
 
         fullData[row_values[1]].append(temp)

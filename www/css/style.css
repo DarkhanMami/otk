@@ -9,7 +9,7 @@ div{
     line-height: 20px;
     color: #ffffff;
     font-color:#ffffff;
-    font-size: 1.2vw;
+    font-size: 1.0vw;
 }
 
 
@@ -160,6 +160,7 @@ line-height: 1.5;
 	border-color: #2D2D32;
 	font-size: 1.0vw;
 
+
 }
 .table-heading2{
 
@@ -167,8 +168,7 @@ line-height: 1.5;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	background: #2D2D32;
-	border-color: #2D2D32;
-
+	border-color: #2D2D32;    
 
 }
 
@@ -178,7 +178,7 @@ line-height: 1.5;
 	padding-bottom: 0px;
 	background: #50505A;
 	border-color: #2D2D32;
-	font-size: 1.3vw;
+	font-size: 1.0vw;
 
 
 }
@@ -189,7 +189,7 @@ line-height: 1.5;
 	color:#83de32;
 	background: #50505A;
 	border-color: #50505A;
-	font-size: 1.3vw;
+	font-size: 1.0vw;
 
 }
 
