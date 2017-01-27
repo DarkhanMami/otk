@@ -116,7 +116,12 @@ def fileParse():
             temp.append(float("{0:.2f}".format(row_values[10])))
         except:
             temp.append(row_values[10])
-
+        # try:
+        #     float(row_values[11])
+        #     temp.append(float(row_values[11]))
+        # except:
+        #     
+        temp.append(row_values[11])
 
         fullData[row_values[1]].append(temp)
 

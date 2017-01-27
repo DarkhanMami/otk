@@ -86,6 +86,7 @@ angular.module('starter.controllers', ['chart.js'])
                       "v5": value.v5,
                       "v6": value.v6,
                       "v7": value.v7,
+                      "v8": value.v8,
                   }
               }
             }, null);
@@ -151,6 +152,7 @@ angular.module('starter.controllers', ['chart.js'])
                       "v5": value.v5,
                       "v6": value.v6,
                       "v7": value.v7,
+                      "v8": value.v8,
                   }
               }
             }, null);

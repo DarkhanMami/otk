@@ -182,6 +182,7 @@ angular.module('starter.services', [])
                       'v5': smartData[month + p][7],
                       'v6': smartData[month + p][8],
                       'v7': smartData[month + p][9],
+                      'v8': Math.round(smartData[month + p][11]),
                   }
               } else {
                   var obj = {
@@ -193,6 +194,7 @@ angular.module('starter.services', [])
                       'v5': 0,
                       'v6': 0,
                       'v7': 0,
+                      'v8': 0,
                   }
               }
               result.push(obj)
