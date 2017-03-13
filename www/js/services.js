@@ -55,6 +55,13 @@ angular.module('starter.services', [])
     var places = [];
     var fullData = {};
     var smartData = {};
+
+    var main_monthes = {};
+    var main_colNames = {};
+    var main_places = {};
+    var main_fullData = {};
+    var main_smartData = {};
+
     var currentMonth;
     var currentMonthNum = "01";
     var count = 0;
@@ -87,19 +94,22 @@ angular.module('starter.services', [])
       // perform some asynchronous operation, resolve or reject the promise when appropriate.
       return $q(function(resolve, reject) {
           $http.get("monthes2.json").success(function (response) {
-              monthes = response;
-              currentMonth = monthes[0];
+              main_monthes = response;
               $http.get("fullData2.json").success(function (response) {
-
-                  fullData = response;
+                  main_fullData = response;
                   $http.get("colNames2.json").success(function (response) {
-                      colNames = response;
+                      main_colNames = response;
                       $http.get("places2.json").success(function (response) {
-                          places = response;
+                          main_places = response;
                           $http.get("smartData2.json").success(function (response) {
-                              smartData = response;
+                              main_smartData = response;
 
-
+                              monthes = main_monthes['otk'];
+                              fullData = main_fullData['otk'];
+                              colNames = main_colNames['otk'];
+                              places = main_places['otk'];
+                              smartData = main_smartData['otk'];
+                              currentMonth = monthes[0];
                               resolve("OK");
                           });
                       });
@@ -131,6 +141,121 @@ angular.module('starter.services', [])
             }
 
             currentMonth = newMonth;
+        },
+        changeData: function(utt) {
+            if (utt == "data_mutt") {
+                monthes = main_monthes['data_mutt'];
+                fullData = main_fullData['data_mutt'];
+                colNames = main_colNames['data_mutt'];
+                places = main_places['data_mutt'];
+                smartData = main_smartData['data_mutt'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_mutt_1") {
+                monthes = main_monthes['data_mutt_1'];
+                fullData = main_fullData['data_mutt_1'];
+                colNames = main_colNames['data_mutt_1'];
+                places = main_places['data_mutt_1'];
+                smartData = main_smartData['data_mutt_1'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_mutt_2") {
+                monthes = main_monthes['data_mutt_2'];
+                fullData = main_fullData['data_mutt_2'];
+                colNames = main_colNames['data_mutt_2'];
+                places = main_places['data_mutt_2'];
+                smartData = main_smartData['data_mutt_2'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_mutt_3") {
+                monthes = main_monthes['data_mutt_3'];
+                fullData = main_fullData['data_mutt_3'];
+                colNames = main_colNames['data_mutt_3'];
+                places = main_places['data_mutt_3'];
+                smartData = main_smartData['data_mutt_3'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_jutt") {
+                monthes = main_monthes['data_jutt'];
+                fullData = main_fullData['data_jutt'];
+                colNames = main_colNames['data_jutt'];
+                places = main_places['data_jutt'];
+                smartData = main_smartData['data_jutt'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_jutt_1") {
+                monthes = main_monthes['data_jutt_1'];
+                fullData = main_fullData['data_jutt_1'];
+                colNames = main_colNames['data_jutt_1'];
+                places = main_places['data_jutt_1'];
+                smartData = main_smartData['data_jutt_1'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_jutt_2") {
+                monthes = main_monthes['data_jutt_2'];
+                fullData = main_fullData['data_jutt_2'];
+                colNames = main_colNames['data_jutt_2'];
+                places = main_places['data_jutt_2'];
+                smartData = main_smartData['data_jutt_2'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_jutt_3") {
+                monthes = main_monthes['data_jutt_3'];
+                fullData = main_fullData['data_jutt_3'];
+                colNames = main_colNames['data_jutt_3'];
+                places = main_places['data_jutt_3'];
+                smartData = main_smartData['data_jutt_3'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_jutt_4") {
+                monthes = main_monthes['data_jutt_4'];
+                fullData = main_fullData['data_jutt_4'];
+                colNames = main_colNames['data_jutt_4'];
+                places = main_places['data_jutt_4'];
+                smartData = main_smartData['data_jutt_4'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_butt") {
+                monthes = main_monthes['data_butt'];
+                fullData = main_fullData['data_butt'];
+                colNames = main_colNames['data_butt'];
+                places = main_places['data_butt'];
+                smartData = main_smartData['data_butt'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_butt_1") {
+                monthes = main_monthes['data_butt_1'];
+                fullData = main_fullData['data_butt_1'];
+                colNames = main_colNames['data_butt_1'];
+                places = main_places['data_butt_1'];
+                smartData = main_smartData['data_butt_1'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_butt_2") {
+                monthes = main_monthes['data_butt_2'];
+                fullData = main_fullData['data_butt_2'];
+                colNames = main_colNames['data_butt_2'];
+                places = main_places['data_butt_2'];
+                smartData = main_smartData['data_butt_2'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_butt_3") {
+                monthes = main_monthes['data_butt_3'];
+                fullData = main_fullData['data_butt_3'];
+                colNames = main_colNames['data_butt_3'];
+                places = main_places['data_butt_3'];
+                smartData = main_smartData['data_butt_3'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_butt_4") {
+                monthes = main_monthes['data_butt_4'];
+                fullData = main_fullData['data_butt_4'];
+                colNames = main_colNames['data_butt_4'];
+                places = main_places['data_butt_4'];
+                smartData = main_smartData['data_butt_4'];
+                currentMonth = monthes[0];
+            } else if (utt == "data_butt_5") {
+                monthes = main_monthes['data_butt_5'];
+                fullData = main_fullData['data_butt_5'];
+                colNames = main_colNames['data_butt_5'];
+                places = main_places['data_butt_5'];
+                smartData = main_smartData['data_butt_5'];
+                currentMonth = monthes[0];
+            } else if (utt == "otk") {
+                monthes = main_monthes['otk'];
+                fullData = main_fullData['otk'];
+                colNames = main_colNames['otk'];
+                places = main_places['otk'];
+                smartData = main_smartData['otk'];
+                currentMonth = monthes[0];
+            };
         },
         getCurrentMonth: function() {
             return currentMonth;
@@ -166,6 +291,7 @@ angular.module('starter.services', [])
             }
             return obj;
         },
+      
       getPlaces: function (month) {
           var result = [];
 

@@ -53,13 +53,6 @@ def fileParse():
     plSet = Set([])
 
 
-    col_dict = OrderedDict()
-    col_dict['colNames'] = colNames
-
-    j = json.dumps(col_dict)
-    with open('colNames.json', 'w') as f:
-        f.write(j)
-
     monthes = []
     for rownum in range(1, sh.nrows):
         row_values = sh.row_values(rownum)
@@ -133,40 +126,28 @@ def fileParse():
 
 
 
+    main_fullData = dict()
+    main_places = dict()
+    main_colNames = dict()
+    main_monthes = dict()
+    main_smartData = dict()
 
-    pl_dict = OrderedDict()
-    pl_dict['places'] = places
-    j = json.dumps(pl_dict)
-    with open('places.json', 'w') as f:
-        f.write(j)
-
-
-
-
-    full_dict = OrderedDict()
-    full_dict['fullData'] = fullData
-    j = json.dumps(full_dict)
+    main_fullData['otk'] = fullData
+    main_places['otk'] = places
+    main_colNames['otk'] = colNames
+    main_monthes['otk'] = monthes
+    main_smartData['otk'] = smartData
 
     with open('fullData2.json', 'w') as f:
-        f.write(json.dumps(fullData))
+        f.write(json.dumps(main_fullData))
     with open('places2.json', 'w') as f:
-        f.write(json.dumps(places))
+        f.write(json.dumps(main_places))
     with open('colNames2.json', 'w') as f:
-        f.write(json.dumps(colNames))
+        f.write(json.dumps(main_colNames))
     with open('monthes2.json', 'w') as f:
-        f.write(json.dumps(monthes))
-
+        f.write(json.dumps(main_monthes))
     with open('smartData2.json', 'w') as f:
-        f.write(json.dumps(smartData))
-
-    with open('fullData.json', 'w') as f:
-        f.write(j)
-
-    with open('fullData.json', 'w') as f:
-        f.write(j)
-
-
-
+        f.write(json.dumps(main_smartData))
 
 
 

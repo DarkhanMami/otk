@@ -1,20 +1,35 @@
 <ion-view view-title="Browse" class="black-theme">
     <ion-header-bar align-title="center" class="bar-dark">
-<!--       <div class="buttons">
-            <button class="year1" ng-style="{'font-size':'2vw'}">{{year1}}</button> &nbsp&nbsp
-            <select ng-model="year2" class="button button-positive" ng-options="name as name for name in years" ng-change="updateYear2(year2)" ng-style="{'font-size':'2vw'}">
-              </select>
-        </div> -->
-            <!-- <div class="buttons">
-            <select ng-model="year2" class="button" ng-options="name as name for name in years" ng-change="updateYear2(year2)" >
-              </select>
-      </div> -->
+      <div class="buttons">
+            <button class="year1" ng-style="{'font-size':'2vw'}"><!-- {{year1}} -->2016</button> &nbsp&nbsp
+            <button class="button button-positive" ng-style="{'font-size':'2vw'}">2017</button>
+            <!-- <select ng-model="year2" class="button button-positive" ng-options="name as name for name in years" ng-change="updateYear2(year2)" ng-style="{'font-size':'2vw'}">
+              </select> -->
+        </div>
       <h1 class="title">Анализ стратегических показателей</h1>
-<!--       <div class="buttons">
-
-            <button class="button button-icon ion-more" ng-click="popover.show($event)"> -->
-        </button>
-          	<i class="button button-icon ion-android-refresh small" style="color:#ffffff;"></i>
+      <div class="buttons">
+      		<select ng-model="utt" ng-change="changeUTT(utt)" class="button" ng-style="{'font-size':'1.2vw'}">
+      			<option ng-selected="true" value='otk'>ОТК</option>
+      			<option value='data_mutt'>МУТТ</option>
+      			<option value='data_jutt'>ЖУТТ</option>
+      			<option value='data_butt'>БУТТ</option>
+              </select>&nbsp&nbsp
+              <select ng-model="kolonna" ng-change="changeUTT(kolonna)" class="button" ng-style="{'font-size':'1.2vw'}">
+      			<option ng-if="utt=='otk' || utt=='data_jutt'" value='data_jutt_1'>ЖУТТ-1</option>
+      			<option ng-if="utt=='otk' || utt=='data_jutt'" value='data_jutt_2'>ЖУТТ-2</option>
+      			<option ng-if="utt=='otk' || utt=='data_jutt'" value='data_jutt_3'>ЖУТТ-3</option>
+      			<option ng-if="utt=='otk' || utt=='data_jutt'" value='data_jutt_4'>ЖУТТ-4</option>
+      			<option ng-if="utt=='otk' || utt=='data_mutt'" value='data_mutt_1'>МУТТ-1</option>
+      			<option ng-if="utt=='otk' || utt=='data_mutt'" value='data_mutt_2'>МУТТ-2</option>
+      			<option ng-if="utt=='otk' || utt=='data_mutt'" value='data_mutt_3'>МУТТ-3</option>
+      			<option ng-if="utt=='otk' || utt=='data_butt'" value='data_butt_1'>БУТТ-1</option>
+      			<option ng-if="utt=='otk' || utt=='data_butt'" value='data_butt_2'>БУТТ-2</option>
+      			<option ng-if="utt=='otk' || utt=='data_butt'" value='data_butt_3'>БУТТ-3</option>
+      			<option ng-if="utt=='otk' || utt=='data_butt'" value='data_butt_4'>БУТТ-4</option>
+      			<option ng-if="utt=='otk' || utt=='data_butt'" value='data_butt_5'>БУТТ-5</option>
+              </select>&nbsp&nbsp
+            <!-- <button class="button" ng-click="popover.show($event)"> УТТ </button> -->
+          	<i class="button button-icon ion-android-refresh small" style="color:#ffffff;" ng-click="updateDatabase()"></i>
       </div>
     </ion-header-bar>
   <ion-content class="black-theme" scroll="true">
@@ -25,10 +40,10 @@
 	<div class="col">
 		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{selectedItem.name}}</h4>
 		<h5 class="black-theme" ng-style="{'font-size':'1.3vw'}">{{pretitle}} (%)</h5>
-		<h5 class="black-theme" ng-style="{'font-size':'1.1vw'}">Доход с нач. года 2015-2016 (млн. тг)</h5>
+		<h5 class="black-theme" ng-style="{'font-size':'1.1vw'}">Доход с нач. года 2016-2017 (млн. тг)</h5>
 	</div>
 	<div class="col text-right">
-		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{currentMonth}} 2015-2016</h4>
+		<h4 class="black-theme" ng-style="{'font-size':'1.8vw'}">{{currentMonth}} 2016-2017</h4>
 	</div>
 </div>
 
