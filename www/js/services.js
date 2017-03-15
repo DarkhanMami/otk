@@ -65,43 +65,19 @@ angular.module('starter.services', [])
     var currentMonth;
     var currentMonthNum = "01";
     var count = 0;
-    // $http.get("monthes2.json").success(function (response) {
-    //     monthes = response;
-    //     currentMonth = monthes[0];
-    //     count += 1;
-    // });
-    // $http.get("fullData2.json").success(function (response) {
-    //     console.log('here');
-    //     console.log(response);
-    //     fullData = response;
-    //     count += 1;
-    // });
-    // $http.get("colNames2.json").success(function (response) {
-    //     colNames = response;
-    //     count += 1;
-    // });
-    // $http.get("places2.json").success(function (response) {
-    //     places = response;
-    //     count += 1;
-    // });
-    //
-    // $http.get("smartData2.json").success(function (response) {
-    //     smartData = response;
-    //     console.log(smartData);
-    //     count += 1;
-    // });
+
     var asyncInit = function() {
       // perform some asynchronous operation, resolve or reject the promise when appropriate.
       return $q(function(resolve, reject) {
-          $http.get("monthes2.json").success(function (response) {
+          $http.get("/android_asset/www/monthes2.json").success(function (response) {
               main_monthes = response;
-              $http.get("fullData2.json").success(function (response) {
+              $http.get("/android_asset/www/fullData2.json").success(function (response) {
                   main_fullData = response;
-                  $http.get("colNames2.json").success(function (response) {
+                  $http.get("/android_asset/www/colNames2.json").success(function (response) {
                       main_colNames = response;
-                      $http.get("places2.json").success(function (response) {
+                      $http.get("/android_asset/www/places2.json").success(function (response) {
                           main_places = response;
-                          $http.get("smartData2.json").success(function (response) {
+                          $http.get("/android_asset/www/smartData2.json").success(function (response) {
                               main_smartData = response;
 
                               monthes = main_monthes['otk'];
@@ -142,6 +118,15 @@ angular.module('starter.services', [])
 
             currentMonth = newMonth;
         },
+        updateData: function() {
+            $http.get("http://192.168.33.87:81/nova-api/get_smartData")
+            .success(function(data) {
+                main_smartData = data;
+                console.log(main_smartData);
+            });
+        },
+
+
         changeData: function(utt) {
             if (utt == "data_mutt") {
                 monthes = main_monthes['data_mutt'];

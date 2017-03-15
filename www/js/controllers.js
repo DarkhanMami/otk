@@ -70,13 +70,10 @@ angular.module('starter.controllers', ['chart.js'])
 
 
         $scope.updateDatabase = function() {
-            console.log('updating');
-            var PythonShell = require('python-shell');
-
-            PythonShell.run('sql_parser.py', function (err) {
-              if (err) throw err;
-              console.log('finished');
-            });
+            console.log('start');
+            Data.updateData();
+            Data.changeData($scope.utt);
+            run();            
         };
 
         $scope.updateData = function(name) {
