@@ -18,8 +18,10 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 .controller("BarCtrl", function($scope, Data, $ionicLoading, $http, $timeout, $cordovaFile) {
     $scope.show = false;
     var promise = Data.init();
+
     // $scope.currentMonth = "";
     promise.then(function(greeting) {
+        Data.updateAllData();
         run();
 
     }, function(reason) {
@@ -70,18 +72,13 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
         $scope.updateDatabase = function() {
-            console.log('start');
-            console.log(cordova.file.dataDirectory);
-
-              $cordovaFile.checkFile(cordova.file.dataDirectory, "android_asset/www/monthes2.json")
-                    .then(function (success) {
-                console.log(success);
-              }, function (error) {
-                console.log(error);
-              });
-            // Data.updateData();
-            // Data.changeData($scope.utt);
-            // run();            
+            console.log('start updating');
+            Data.updateData();
+            setTimeout(function(){
+                Data.updateAllData();
+            }, 5000);            
+            run();    
+            console.log('finish updating');        
         };
 
         $scope.updateData = function(name) {
