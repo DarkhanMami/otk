@@ -144,42 +144,176 @@ angular.module('starter.services', ['ngCordova'])
             });
         },
 
+        changeAllData: function(type){
+            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json").then(function (response) {                
+                main_monthes = JSON.parse(response);
+                $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json").then(function (response) {
+                    main_fullData = JSON.parse(response);
+                    $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json").then(function (response) {
+                        main_colNames = JSON.parse(response);
+                        $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "places2.json").then(function (response) {
+                            main_places = JSON.parse(response);
+                            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json").then(function (response) {
+                                main_smartData = JSON.parse(response);
+
+                                monthes = main_monthes['otk'];
+                                fullData = main_fullData['otk'];
+                                colNames = main_colNames['otk'];
+                                places = main_places['otk'];
+                                smartData = main_smartData['otk'];                                
+                                currentMonth = monthes[0];
+                            });
+                        });
+                    });
+                });
+            });
+        },
+
+
         updateData: function() {
 
-            $http.get("http://192.168.33.87:81/nova-api/get_full_data")
+            // $http.get("http://192.168.33.87:81/nova-api/get_full_data")
+            // .success(function(data) {
+            //     $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/fullData2.json", true)
+            //         .then(function (success) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/fullData2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/fullData2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });
+            //         }, function (error) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/fullData2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/fullData2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });                      
+            //         });
+            // });
+
+            // $http.get("http://192.168.33.87:81/nova-api/get_monthes")
+            // .success(function(data) {
+            //     $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/monthes2.json", true)
+            //         .then(function (success) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/monthes2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/monthes2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });
+            //         }, function (error) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/monthes2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/monthes2.json", data, true)
+            //                     .then(function (success) {
+
+            //                     });
+            //               });                      
+            //         });
+            // });
+
+            // $http.get("http://192.168.33.87:81/nova-api/get_colNames")
+            // .success(function(data) {
+            //     $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/colNames2.json", true)
+            //         .then(function (success) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/colNames2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/colNames2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });
+            //         }, function (error) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/colNames2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/colNames2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });                      
+            //         });
+            // });
+
+            // $http.get("http://192.168.33.87:81/nova-api/get_places")
+            // .success(function(data) {
+            //     $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/places2.json", true)
+            //         .then(function (success) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/places2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/places2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });
+            //         }, function (error) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/places2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/places2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });                      
+            //         });
+            // });
+
+            // $http.get("http://192.168.33.87:81/nova-api/get_smartData")
+            // .success(function(data) {
+            //     $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/smartData2.json", true)
+            //         .then(function (success) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/smartData2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/smartData2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });
+            //         }, function (error) {
+            //           $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/smartData2.json", true)
+            //               .then(function (success) {
+            //                 $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/smartData2.json", data, true)
+            //                     .then(function (success) {
+            //                     });
+            //               });                      
+            //         });
+            // });
+
+            updateDataHelper("");
+
+            
+       },
+
+       updateDataHelper: function(type) {
+
+            $http.get("http://192.168.33.87:81/nova-api/" + type + "get_full_data")
             .success(function(data) {
-                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/fullData2.json", true)
+                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", true)
                     .then(function (success) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/fullData2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/fullData2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", data, true)
                                 .then(function (success) {
                                 });
                           });
                     }, function (error) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/fullData2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/fullData2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", data, true)
                                 .then(function (success) {
                                 });
                           });                      
                     });
             });
 
-            $http.get("http://192.168.33.87:81/nova-api/get_monthes")
+            $http.get("http://192.168.33.87:81/nova-api/" + type + "get_monthes")
             .success(function(data) {
-                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/monthes2.json", true)
+                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json", true)
                     .then(function (success) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/monthes2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/monthes2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json", data, true)
                                 .then(function (success) {
                                 });
                           });
                     }, function (error) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/monthes2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/monthes2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json", data, true)
                                 .then(function (success) {
 
                                 });
@@ -187,60 +321,60 @@ angular.module('starter.services', ['ngCordova'])
                     });
             });
 
-            $http.get("http://192.168.33.87:81/nova-api/get_colNames")
+            $http.get("http://192.168.33.87:81/nova-api/" + type + "get_colNames")
             .success(function(data) {
-                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/colNames2.json", true)
+                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json", true)
                     .then(function (success) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/colNames2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/colNames2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json", data, true)
                                 .then(function (success) {
                                 });
                           });
                     }, function (error) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/colNames2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/colNames2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json", data, true)
                                 .then(function (success) {
                                 });
                           });                      
                     });
             });
 
-            $http.get("http://192.168.33.87:81/nova-api/get_places")
+            $http.get("http://192.168.33.87:81/nova-api/" + type + "get_places")
             .success(function(data) {
-                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/places2.json", true)
+                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/" + type + "places2.json", true)
                     .then(function (success) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/places2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "places2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/places2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "places2.json", data, true)
                                 .then(function (success) {
                                 });
                           });
                     }, function (error) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/places2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "places2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/places2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "places2.json", data, true)
                                 .then(function (success) {
                                 });
                           });                      
                     });
             });
 
-            $http.get("http://192.168.33.87:81/nova-api/get_smartData")
+            $http.get("http://192.168.33.87:81/nova-api/" + type + "get_smartData")
             .success(function(data) {
-                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/smartData2.json", true)
+                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json", true)
                     .then(function (success) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/smartData2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/smartData2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json", data, true)
                                 .then(function (success) {
                                 });
                           });
                     }, function (error) {
-                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/smartData2.json", true)
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json", true)
                           .then(function (success) {
-                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/smartData2.json", data, true)
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json", data, true)
                                 .then(function (success) {
                                 });
                           });                      
@@ -248,6 +382,7 @@ angular.module('starter.services', ['ngCordova'])
             });
             
        },
+
 
 
         changeData: function(utt) {
