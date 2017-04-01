@@ -22,21 +22,21 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
     // $scope.currentMonth = "";
     promise.then(function(greeting) {
         Data.updateAllData();
-        run();
+        run("Анализ рентабельности по ТС");
 
     }, function(reason) {
         console.log(reason);
     });
 
 
-    var run = function() {
+    var run = function(preTit) {
 
 
         $scope.colNames = Data.getColNames();
         $scope.places = Data.getPlaces("янв");
         $scope.monthes = Data.getMonthes();
         $scope.currentMonth = $scope.monthes[0];
-        $scope.pretitle = "Анализ рентабельности по ТС";
+        $scope.pretitle = preTit;
         $scope.currentMonthIndex = 0;
 
         $scope.sortKey = 'name';
@@ -67,23 +67,31 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
         $scope.changeUTT = function(utt) {
             Data.changeData(utt);
-            run();
+            run(preTit);
         };
 
 
         $scope.updateDatabase = function() {
-            console.log('start updating');
-            Data.updateData();
+            //Data.updateData();
+            
+            Data.updateDataHelper("");
+            Data.updateDataHelper("usluga");
+            Data.updateDataHelper("ceh");
+            Data.updateDataHelper("statya");
+            
             setTimeout(function(){
                 Data.updateAllData();
-            }, 5000);            
-            run();    
-            console.log('finish updating');        
+                setTimeout(function(){
+                    run("Анализ рентабельности по ТС");
+                    $scope.$apply();
+                }, 2000); 
+            }, 2000);
+
+            run("Анализ рентабельности по ТС");
+            $scope.$apply();     
         };
 
         $scope.updateData = function(name) {
-
-            $scope.pretitle = "Анализ рентабельности по ТС";
             $scope.result = Data.getNumbers(name);
 
             $scope.data = [
@@ -141,6 +149,49 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
         }
 
         $scope.updateData($scope.places[0].name);
+
+
+        $scope.updateTS = function() {
+            Data.changeAllData('');  
+            setTimeout(function(){
+                run("Анализ рентабельности по ТС");
+                $scope.$apply();
+            }, 1000); 
+            run("Анализ рентабельности по ТС");
+            $scope.$apply();
+        };
+
+        $scope.updateUsluga = function() {
+            Data.changeAllData('usluga');
+            setTimeout(function(){
+                run("Анализ рентабельности по услугам РУ");
+                $scope.$apply();
+            }, 1000);
+            run("Анализ рентабельности по услугам РУ");
+            $scope.$apply();     
+        };
+
+        $scope.updateCeh = function() {
+            Data.changeAllData('ceh');  
+            setTimeout(function(){
+                run("Анализ рентабельности по цехам");
+                $scope.$apply();
+            }, 1000); 
+            run("Анализ рентабельности по цехам");
+            $scope.$apply();
+        };
+
+        $scope.updateStatya = function() {
+            Data.changeAllData('statya');  
+            setTimeout(function(){
+                run("Анализ рентабельности по статьям затрат");
+                $scope.$apply();
+            }, 1000); 
+            run("Анализ рентабельности по статьям затрат");
+            $scope.$apply();
+        };
+
+
 
         $scope.raw_selected = function(name) {
           $scope.result = Data.getNumbers(name);
