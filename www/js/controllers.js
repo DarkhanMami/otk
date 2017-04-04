@@ -66,10 +66,22 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
           $scope.$apply();
         };
 
-        $scope.changeUTT = function(utt) {
-            console.log(utt);
+        $scope.changeUTT = function(utt) {          
             Data.changeData(utt);
-            run($scope.pretitle);
+            if (utt.includes("otk")){
+              run($scope.pretitle);
+              $scope.utt = "otk";
+            } else if (utt.includes("data_mutt")){
+              run($scope.pretitle);
+              $scope.utt = "data_mutt";
+            } else if (utt.includes("data_jutt")){
+              run($scope.pretitle);
+              $scope.utt = "data_jutt";
+            } else if (utt.includes("data_butt")){
+              run($scope.pretitle);
+              $scope.utt = "data_butt";
+            }
+            
         };
 
 
@@ -90,8 +102,6 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
                 }, 2000); 
             }, 2000);
 
-            run("Анализ рентабельности по ТС");  
-            $scope.$apply(); 
         };
 
         $scope.updateData = function(name) {
@@ -159,10 +169,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по ТС");
                 $scope.$apply();
-                run("Анализ рентабельности по ТС");
-            }, 2000); 
-            run("Анализ рентабельности по ТС");
-            $scope.$apply();
+            }, 700); 
         };
 
         $scope.updateUsluga = function() {
@@ -170,10 +177,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по услугам РУ");
                 $scope.$apply();
-                run("Анализ рентабельности по услугам РУ");
-            }, 2000);
-            run("Анализ рентабельности по услугам РУ");
-            $scope.$apply();     
+            }, 700);
         };
 
         $scope.updateCeh = function() {
@@ -181,10 +185,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по цехам");
                 $scope.$apply();
-                run("Анализ рентабельности по цехам");
-            }, 2000); 
-            run("Анализ рентабельности по цехам");
-            $scope.$apply();
+            }, 700); 
         };
 
         $scope.updateStatya = function() {
@@ -192,10 +193,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по статьям затрат");
                 $scope.$apply();
-                run("Анализ рентабельности по статьям затрат");
-            }, 2000); 
-            run("Анализ рентабельности по статьям затрат");
-            $scope.$apply();
+            }, 700); 
         };
 
 
