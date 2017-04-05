@@ -169,7 +169,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по ТС");
                 $scope.$apply();
-            }, 700); 
+            }, 10); 
         };
 
         $scope.updateUsluga = function() {
@@ -177,7 +177,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по услугам РУ");
                 $scope.$apply();
-            }, 700);
+            }, 10);
         };
 
         $scope.updateCeh = function() {
@@ -185,7 +185,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по цехам");
                 $scope.$apply();
-            }, 700); 
+            }, 10); 
         };
 
         $scope.updateStatya = function() {
@@ -193,7 +193,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
             setTimeout(function(){
                 run("Анализ рентабельности по статьям затрат");
                 $scope.$apply();
-            }, 700); 
+            }, 10); 
         };
 
 

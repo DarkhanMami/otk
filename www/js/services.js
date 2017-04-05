@@ -62,6 +62,15 @@ angular.module('starter.services', ['ngCordova'])
     var main_fullData = {};
     var main_smartData = {};
 
+
+    var all_data = {};
+    all_data[''] = [];
+    all_data['usluga'] = [];
+    all_data['ceh'] = [];
+    all_data['statya'] = [];
+
+
+
     var currentMonth;
     var currentMonthNum = "01";
     var count = 0;
@@ -137,38 +146,91 @@ angular.module('starter.services', ['ngCordova'])
                                 places = main_places['otk'];
                                 smartData = main_smartData['otk'];                                
                                 currentMonth = monthes[0];
-                                console.log(main_places); 
+                                
+                                all_data[""][0] = main_monthes;
+                                all_data[""][1] = main_fullData;
+                                all_data[""][2] = main_colNames;
+                                all_data[""][3] = main_places;
+                                all_data[""][4] = main_smartData;
+
+
                             });
                         });
                     });
                 });
             });
+
+            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/uslugamonthes2.json").then(function (response) {                
+                all_data["usluga"][0] = JSON.parse(response);
+                $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/uslugafullData2.json").then(function (response) {
+                    all_data["usluga"][1] = JSON.parse(response);
+                    $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/uslugacolNames2.json").then(function (response) {
+                        all_data["usluga"][2] = JSON.parse(response);
+                        $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/uslugaplaces2.json").then(function (response) {
+                            all_data["usluga"][3] = JSON.parse(response);
+                            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/uslugasmartData2.json").then(function (response) {
+                                all_data["usluga"][4] = JSON.parse(response);
+                                
+                            });
+                        });
+                    });
+                });
+            });
+
+            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/cehmonthes2.json").then(function (response) {                
+                all_data["ceh"][0] = JSON.parse(response);
+                $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/cehfullData2.json").then(function (response) {
+                    all_data["ceh"][1] = JSON.parse(response);
+                    $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/cehcolNames2.json").then(function (response) {
+                        all_data["ceh"][2] = JSON.parse(response);
+                        $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/cehplaces2.json").then(function (response) {
+                            all_data["ceh"][3] = JSON.parse(response);
+                            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/cehsmartData2.json").then(function (response) {
+                                all_data["ceh"][4] = JSON.parse(response);
+                                
+                            });
+                        });
+                    });
+                });
+            });
+
+            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/statyamonthes2.json").then(function (response) {                
+                all_data["statya"][0] = JSON.parse(response);
+                $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/statyafullData2.json").then(function (response) {
+                    all_data["statya"][1] = JSON.parse(response);
+                    $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/statyacolNames2.json").then(function (response) {
+                        all_data["statya"][2] = JSON.parse(response);
+                        $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/statyaplaces2.json").then(function (response) {
+                            all_data["statya"][3] = JSON.parse(response);
+                            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/statyasmartData2.json").then(function (response) {
+                                all_data["statya"][4] = JSON.parse(response);
+                                
+                            });
+                        });
+                    });
+                });
+            });
+
+            console.log(all_data);
+
         },
 
-        changeAllData: function(type){
-            console.log(cordova.file.dataDirectory);                          
-            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "monthes2.json").then(function (response) {                
-                main_monthes = JSON.parse(response);
-                $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json").then(function (response) {
-                    main_fullData = JSON.parse(response);
-                    $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "colNames2.json").then(function (response) {
-                        main_colNames = JSON.parse(response);
-                        $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "places2.json").then(function (response) {
-                            main_places = JSON.parse(response);
-                            $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/" + type + "smartData2.json").then(function (response) {
-                                main_smartData = JSON.parse(response);
+        changeAllData: function(type){                   
 
-                                monthes = main_monthes['otk'];
-                                fullData = main_fullData['otk'];
-                                colNames = main_colNames['otk'];
-                                places = main_places['otk'];
-                                smartData = main_smartData['otk'];                                
-                                currentMonth = monthes[0];
-                            });
-                        });
-                    });
-                });
-            });
+            monthes = all_data[type][0]['otk']
+            fullData = all_data[type][1]['otk']
+            colNames = all_data[type][2]['otk'] 
+            places = all_data[type][3]['otk']
+            smartData = all_data[type][4]['otk']
+            currentMonth =   monthes[0];
+
+            main_monthes = all_data[type][0]
+            main_fullData = all_data[type][1]
+            main_colNames = all_data[type][2] 
+            main_places = all_data[type][3]
+            main_smartData = all_data[type][4]
+            currentMonth =   monthes[0];
+
         },
 
 
