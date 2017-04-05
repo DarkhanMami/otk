@@ -35,6 +35,9 @@
       </div>
     </ion-header-bar>
   <ion-content class="black-theme" scroll="true">
+      <div class="screen-loading" ng-show="isLoading">
+        <div class="screen-loader"></div>
+    </div>
 
 <div ng-show="show">
 
@@ -197,7 +200,7 @@
 	      <div class="col col-25" ng-click="sort('name')">
                <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='name', 'ion-arrow-up-b':!reverse && sortKey=='name'}">&nbspНаименование</i>
 	      </div>
-	      
+
 	      <div class="col" ng-click="sort('v8')" ng-if="pretitle != 'Анализ рентабельности по статьям затрат'">
                 <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v8', 'ion-arrow-up-b':!reverse && sortKey=='v8'}">&nbspКол. ТС</i>
 	      </div>
@@ -219,7 +222,7 @@
               <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v2', 'ion-arrow-up-b':!reverse && sortKey=='v2'}">&nbspДоля в расходах</i>
 	      </div>
 
-	      
+
 	      <div class="col" ng-click="sort('v4')" ng-if="pretitle != 'Анализ рентабельности по статьям затрат'">
               <i class="button button-icon table-header-custom" ng-class="{'ion-arrow-down-b':reverse && sortKey=='v4', 'ion-arrow-up-b':!reverse && sortKey=='v4'}">&nbspПрямые расходы</i>
 	      </div>
@@ -244,7 +247,7 @@
 	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям затрат'"><label class="item item-input table-input" ng-style="{'margin-top':'-10%'}"> {{selectedItem.v1 | number:2}} </label> </div>
 	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям затрат'"><label class="item item-input table-input" ng-style="{'margin-top':'-10%'}"> {{selectedItem.v2 | number:2}} </label> </div>
 	      <div class="col" ng-if="pretitle != 'Анализ рентабельности по статьям затрат'"><label class="item item-input table-input" ng-style="{'margin-top':'-10%'}"> {{selectedItem.v3 | number:2}} </label> </div>
-	      
+
 	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям затрат'"><label class="item item-input table-input" ng-style="{'margin-top':'-2%'}"> {{selectedItem.v1 | number:2}} </label> </div>
 	      <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям затрат'"><label class="item item-input table-input" ng-style="{'margin-top':'-2%'}"> {{selectedItem.v2 | number:2}} </label> </div>
 
@@ -258,8 +261,8 @@
 
 		<div class="item table-content" collection-repeat="item in places|orderBy:sortKey:reverse" item-height="33" ng-click="raw_selected(item.name)">
 	            <div class="row">
-	              <div class="col col-25 item-input"><span style="margin-left:1%"> 
-						 {{item.name}} 
+	              <div class="col col-25 item-input"><span style="margin-left:1%">
+						 {{item.name}}
 	              </span></div>
 
 	              <div class="col" ng-if="pretitle == 'Анализ рентабельности по статьям затрат'"><span style="margin-left:7%">{{item.v1 | number:2}} </span></div>
