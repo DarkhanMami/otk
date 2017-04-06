@@ -71,6 +71,8 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
     $scope.show = false;
     var promise = Data.init();
 
+    $scope.selectedButton = 1;
+
     // $scope.currentMonth = "";
     promise.then(function(greeting) {
       Data.updateAllData();
@@ -233,7 +235,6 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       }
 
       $scope.updateData($scope.places[0].name);
-      $scope.selectedButton = 1;
 
       $scope.updateTS = function() {
         $scope.selectedButton = 1;
