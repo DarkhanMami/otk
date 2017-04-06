@@ -3,6 +3,16 @@
     text-decoration: underline;
 }
 
+.selectedButton:before {
+  content: ' \25CF';
+  font-size: 12px;
+}
+
+.selectedButton:after {
+  content: ' \25CF';
+  font-size: 12px;
+}
+
 .screen-loading {
     position: fixed;
     top: 0; right: 0;
