@@ -233,9 +233,10 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       }
 
       $scope.updateData($scope.places[0].name);
-
+      $scope.selectedButton = 1;
 
       $scope.updateTS = function() {
+        $scope.selectedButton = 1;
         Data.changeAllData('');
         setTimeout(function() {
           run("Анализ рентабельности по ТС");
@@ -244,6 +245,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       };
 
       $scope.updateUsluga = function() {
+        $scope.selectedButton = 2;
         Data.changeAllData('usluga');
         setTimeout(function() {
           run("Анализ рентабельности по услугам РУ");
@@ -252,6 +254,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       };
 
       $scope.updateCeh = function() {
+        $scope.selectedButton = 3;
         Data.changeAllData('ceh');
         setTimeout(function() {
           run("Анализ рентабельности по цехам");
@@ -260,6 +263,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       };
 
       $scope.updateStatya = function() {
+        $scope.selectedButton = 4;
         Data.changeAllData('statya');
         setTimeout(function() {
           run("Анализ рентабельности по статьям затрат");

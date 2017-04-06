@@ -128,7 +128,7 @@
 	<div class="col">
 
 		<ul><li><div class="black-mid-list" ng-click="updateTS()">
-				Анализ по ТС
+				<span ng-class="{'selectedButton': selectedButton == 1 }">Анализ по ТС</span>
 				<br>
 				<span ng-if="(b1.v1-b1.v2) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
 				<span ng-if="(b1.v1-b1.v2) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
@@ -144,7 +144,7 @@
 	</div>
 	<div class="col">
 				<ul><li><div class="black-mid-list" ng-click="updateUsluga()">
-				Анализ по услугам РУ
+				<span ng-class="{'selectedButton': selectedButton == 2 }">Анализ по услугам РУ</span>
 				<br>
 
 				<span ng-if="(b2.v1-b2.v2) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
@@ -160,7 +160,7 @@
 	</div>
 		<div class="col">
 		<ul><li><div class="black-mid-list" ng-click="updateCeh()">
-				Анализ по цехам
+				<span ng-class="{'selectedButton': selectedButton == 3 }">Анализ по цехам</span>
 				<br>
 				<span ng-if="((b3.v1-b3.v2)) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
 				<span ng-if="((b3.v1-b3.v2)) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
@@ -175,7 +175,7 @@
 	</div>
 		<div class="col">
 				<ul><li><div class="black-mid-list" ng-click="updateStatya()">
-				Анализ по статьям
+				<span ng-class="{'selectedButton': selectedButton == 4 }">Анализ по статьям</span>
 				<br>
 
 				<span ng-if="((b4.v1-b4.v2)) > 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>

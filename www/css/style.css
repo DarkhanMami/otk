@@ -1,3 +1,8 @@
+.selectedButton {
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
 .screen-loading {
     position: fixed;
     top: 0; right: 0;
