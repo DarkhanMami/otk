@@ -13,7 +13,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
       $scope.message = ""
 
-      if (window.localStorage.getItem("token", "") !== "") {
+      if (window.localStorage.getItem("token", "") == $scope.superSecretCode) {
         $ionicHistory.clearHistory();
         $ionicHistory.nextViewOptions({
           disableAnimate: true,
@@ -26,8 +26,10 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
     });
 
+    $scope.superSecretCode = "1234";
+
     $scope.checkCode = function(loginData) {
-      if (loginData.code == "1234") {
+      if (loginData.code == $scope.superSecretCode) {
         $ionicHistory.clearHistory();
         $ionicHistory.nextViewOptions({
           disableAnimate: true,
@@ -202,21 +204,21 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
                 position: 'left',
                 ticks: {
                   callback: function(value, index, values) {
-                      var dasLabel=value / 1000000;                        
-                          return dasLabel;
-                      }
+                    var dasLabel = value / 1000000;
+                    return dasLabel;
+                  }
                 },
                 scaleLabel: {
                   display: true,
                   labelString: '(млн.)'
                 }
-                },
-                {
-                  id: 'y-axis-2',
-                  type: 'linear',
-                  display: true,
-                  position: 'right'
-                }
+              },
+              {
+                id: 'y-axis-2',
+                type: 'linear',
+                display: true,
+                position: 'right'
+              }
             ]
           },
 
@@ -382,9 +384,9 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
               position: 'left',
               ticks: {
                 callback: function(value, index, values) {
-                    var dasLabel=value / 1000000;                        
-                        return dasLabel;
-                    }
+                  var dasLabel = value / 1000000;
+                  return dasLabel;
+                }
               },
               scaleLabel: {
                 display: true,
