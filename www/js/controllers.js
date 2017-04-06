@@ -11,7 +11,9 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
         "code": ""
       };
 
-      $scope.message = ""
+      $scope.message = "";
+
+      console.log(window.localStorage.getItem("token", ""));
 
       if (window.localStorage.getItem("token", "") == $scope.superSecretCode) {
         $ionicHistory.clearHistory();
@@ -35,6 +37,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
           disableAnimate: true,
           disableBack: true
         });
+        window.localStorage.setItem("token", loginData.code);
         $state.go('app.dohod');
       } else {
         $scope.message = "Неверный код"
