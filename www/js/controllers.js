@@ -149,14 +149,24 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
                 id: 'y-axis-1',
                 type: 'linear',
                 display: true,
-                position: 'left'
-              },
-              {
-                id: 'y-axis-2',
-                type: 'linear',
-                display: true,
-                position: 'right'
-              }
+                position: 'left',
+                ticks: {
+                  callback: function(value, index, values) {
+                      var dasLabel=value / 1000000;                        
+                          return dasLabel;
+                      }
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: '(млн.)'
+                }
+                },
+                {
+                  id: 'y-axis-2',
+                  type: 'linear',
+                  display: true,
+                  position: 'right'
+                }
             ]
           },
 
@@ -319,20 +329,23 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
               id: 'y-axis-1',
               type: 'linear',
               display: true,
-              position: 'left'
+              position: 'left',
+              ticks: {
+                callback: function(value, index, values) {
+                    var dasLabel=value / 1000000;                        
+                        return dasLabel;
+                    }
+              },
+              scaleLabel: {
+                display: true,
+                labelString: '(млн.)'
+              }
             },
             {
               id: 'y-axis-2',
               type: 'linear',
               display: true,
-              position: 'right',
-              // elements: {
-              //     line: {
-              //         fill: false,
-              //         skipNull: true,
-              //         drawNull: false,
-              //     }
-              // }
+              position: 'right'
             }
           ]
         },

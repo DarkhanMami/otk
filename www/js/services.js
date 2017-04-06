@@ -222,7 +222,7 @@ angular.module('starter.services', ['ngCordova'])
             colNames = all_data[type][2]['otk'] 
             places = all_data[type][3]['otk']
             smartData = all_data[type][4]['otk']
-            currentMonth =   monthes[0];
+            currentMonth =   monthes[0];            
 
             main_monthes = all_data[type][0]
             main_fullData = all_data[type][1]
