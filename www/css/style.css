@@ -1,16 +1,15 @@
-.selectedButton {
-    font-weight: bolder;
-    text-decoration: underline;
+
+.button-box {
+    position: relative;
 }
 
-.selectedButton:before {
-  content: ' \25CF';
-  font-size: 12px;
-}
-
-.selectedButton:after {
-  content: ' \25CF';
-  font-size: 12px;
+.selectedButton::after {
+    content: ' \25CF';
+    font-size: 12px;
+    position: absolute;
+    top: 0px;
+    right: 3px;
+    color: #d42618;
 }
 
 .screen-loading {

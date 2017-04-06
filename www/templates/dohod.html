@@ -127,8 +127,9 @@
 <div class="row">
 	<div class="col">
 
-		<ul><li><div class="black-mid-list" ng-click="updateTS()">
-				<span ng-class="{'selectedButton': selectedButton == 1 }">Анализ по ТС</span>
+		<ul><li><div class="black-mid-list button-box" ng-click="updateTS()">
+				<span>Анализ по ТС</span>
+                <span ng-class="{'selectedButton': selectedButton == 1 }"></span>
 				<br>
 				<span ng-if="(b1.v1-b1.v2) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
 				<span ng-if="(b1.v1-b1.v2) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
@@ -143,8 +144,9 @@
 		</div></li></ul>
 	</div>
 	<div class="col">
-				<ul><li><div class="black-mid-list" ng-click="updateUsluga()">
-				<span ng-class="{'selectedButton': selectedButton == 2 }">Анализ по услугам РУ</span>
+				<ul><li><div class="black-mid-list button-box" ng-click="updateUsluga()">
+				<span>Анализ по услугам РУ</span>
+                <span ng-class="{'selectedButton': selectedButton == 2 }"></span>
 				<br>
 
 				<span ng-if="(b2.v1-b2.v2) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
@@ -159,8 +161,9 @@
 		</div></li></ul>
 	</div>
 		<div class="col">
-		<ul><li><div class="black-mid-list" ng-click="updateCeh()">
-				<span ng-class="{'selectedButton': selectedButton == 3 }">Анализ по цехам</span>
+		<ul><li><div class="black-mid-list button-box" ng-click="updateCeh()">
+				<span>Анализ по цехам</span>
+                <span ng-class="{'selectedButton': selectedButton == 3 }"></span>
 				<br>
 				<span ng-if="((b3.v1-b3.v2)) >= 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
 				<span ng-if="((b3.v1-b3.v2)) < 0"> <i class=" ion-arrow-down-b big-2 color-danger"></i> </span>
@@ -174,8 +177,9 @@
 		</div></li></ul>
 	</div>
 		<div class="col">
-				<ul><li><div class="black-mid-list" ng-click="updateStatya()">
-				<span ng-class="{'selectedButton': selectedButton == 4 }">Анализ по статьям</span>
+				<ul><li><div class="black-mid-list button-box" ng-click="updateStatya()">
+				<span>Анализ по статьям</span>
+                <span ng-class="{'selectedButton': selectedButton == 4 }"></span>
 				<br>
 
 				<span ng-if="((b4.v1-b4.v2)) > 0"> <i class=" ion-arrow-up-b big-2 color-good"></i> </span>
