@@ -1,6 +1,56 @@
 angular.module('starter.controllers', ['chart.js', 'ngCordova'])
+  .controller('LoginCtrl', function($scope, $state, $ionicHistory) {
 
-  .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+    $scope.show = false;
+    $scope.loginData = {
+      "code": ""
+    };
+
+    $scope.$on("$ionicView.enter", function(event, data) {
+      $scope.loginData = {
+        "code": ""
+      };
+
+      $scope.message = ""
+
+      if (window.localStorage.getItem("token", "") !== "") {
+        $ionicHistory.clearHistory();
+        $ionicHistory.nextViewOptions({
+          disableAnimate: true,
+          disableBack: true
+        });
+        $state.go('app.dohod');
+      } else {
+        $scope.show = true;
+      }
+
+    });
+
+    $scope.checkCode = function(loginData) {
+      if (loginData.code == "1234") {
+        $ionicHistory.clearHistory();
+        $ionicHistory.nextViewOptions({
+          disableAnimate: true,
+          disableBack: true
+        });
+        $state.go('app.dohod');
+      } else {
+        $scope.message = "Неверный код"
+      }
+    }
+
+  })
+  .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory, $state) {
+    $scope.logout = function() {
+      window.localStorage.setItem("token", "");
+      $ionicHistory.clearHistory();
+      $ionicHistory.nextViewOptions({
+        disableAnimate: true,
+        disableBack: true
+      });
+      $state.go('login');
+    }
+
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.

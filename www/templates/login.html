@@ -1,0 +1,25 @@
+<ion-view view-title="Browse" class="black-theme">
+   <ion-header-bar align-title="center" class="bar-dark">
+
+   </ion-header-bar>
+   <ion-content  scroll="false">
+       <form ng-show="show">
+           <div class="row">
+               <div class="col col-25"></div>
+               <div class="col"><div class="list">
+                 <label class="item item-input">
+                   <span class="input-label">Код для входа</span>
+                    <span style="font-size: 18px;"></span> &nbsp<input type="tel" ng-model="loginData.code" style="font-size: 18px;">
+                 </label>
+                 <label class="item">
+                     <button class="button button-block button-positive" type="submit" ng-click="checkCode(loginData)" ng-disabled="!loginData.code">Войти</button>
+                 </label>
+               </div></div>
+               <div class="col col-25"></div>
+           </div>
+           <p class="text-center"><span class="assertive">{{message}}</span></p>
+
+   </form>
+    <ion-spinner icon="spiral" ng-show="loading"></ion-spinner>
+  </ion-content>
+</ion-view>
