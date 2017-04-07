@@ -70,7 +70,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
   })
 
-  .controller("BarCtrl", function($scope, Data, $ionicLoading, $http, $timeout, $cordovaFile) {
+  .controller("BarCtrl", function($scope, Data, $ionicLoading, $http, $timeout, $cordovaFile, $ionicPopup) {
     $scope.show = false;
     var promise = Data.init();
 
@@ -151,9 +151,19 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
         $scope.isLoading = true;
 
         Data.updateDataHelper("");
-        Data.updateDataHelper("usluga");
-        Data.updateDataHelper("ceh");
-        Data.updateDataHelper("statya");
+        setTimeout(function() {
+            Data.updateDataHelper("usluga");
+            setTimeout(function() {
+                Data.updateDataHelper("ceh");
+                setTimeout(function() {
+                    Data.updateDataHelper("statya");
+                }, 1000);
+            }, 1000);
+        }, 1000);
+
+        
+        
+        
 
 
         setTimeout(function() {
@@ -161,11 +171,35 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
           setTimeout(function() {
             run("Анализ рентабельности по ТС");
             $scope.isLoading = false;
+            if (Data.getDownloaded() == true) {
+              $scope.showPopup();
+            } else {
+              $scope.showPopup2();
+            }
+
             $scope.$apply();
+
+
           }, 2000);
         }, 4000);
 
       };
+
+
+      $scope.showPopup = function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Обновление',
+            template: 'Данные обновлены!'
+          });
+      };
+
+      $scope.showPopup2 = function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Обновление',
+            template: 'Нет подключения к базе данных!'
+          });
+      };
+
 
       $scope.updateData = function(name) {
         $scope.result = Data.getNumbers(name);

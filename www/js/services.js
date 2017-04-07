@@ -62,6 +62,8 @@ angular.module('starter.services', ['ngCordova'])
     var main_fullData = {};
     var main_smartData = {};
 
+    var downloaded = false;
+
 
     var all_data = {};
     all_data[''] = [];
@@ -211,7 +213,6 @@ angular.module('starter.services', ['ngCordova'])
                 });
             });
 
-            console.log(all_data);
 
         },
 
@@ -236,23 +237,25 @@ angular.module('starter.services', ['ngCordova'])
 
 
        updateDataHelper: function(type) {
+            downloaded = false;
             $cordovaFile.checkDir(cordova.file.dataDirectory, "otk_data")
             .then(function (success) {
               // success
             }, function (error) {
                   $cordovaFile.createDir(cordova.file.dataDirectory, "otk_data", false)
                       .then(function (success) {
-                        console.log(success);
                       }, function (error) {
-                        console.log(error);
                       });
             });
 
-
-            
-
+            $http.get("http://192.168.33.87:81/nova-api/get_colNames")
+            .success(function(data) {
+                downloaded = true;
+            });
+            setTimeout(function() {
+                
             $http.get("http://192.168.33.87:81/nova-api/" + type + "get_full_data")
-            .success(function(data) {                
+            .success(function(data) {                     
                 $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", true)
                     .then(function (success) {
                       $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/" + type + "fullData2.json", true)
@@ -354,7 +357,7 @@ angular.module('starter.services', ['ngCordova'])
                           });                      
                     });
             });
-            
+            }, 1000);
        },
 
 
@@ -369,6 +372,9 @@ angular.module('starter.services', ['ngCordova'])
         },
         getCurrentMonth: function() {
             return currentMonth;
+        },
+        getDownloaded: function() {
+            return downloaded;
         },
         getMonthes: function() {
             return monthes;
@@ -408,6 +414,7 @@ angular.module('starter.services', ['ngCordova'])
           for (i in places) {
               var p = places[i];
               var key = month + p;
+              
               if (key in smartData) {
                   var obj = {
                       'name': p,
