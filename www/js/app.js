@@ -64,6 +64,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
         }
       })
+      .state('app.ktg', {
+        url: '/ktg',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/ktg.html',
+            controller: 'KTGCtrl'
+          }
+        }
+      })
       .state('app.ispolnenie', {
         url: '/ispolnenie',
         views: {

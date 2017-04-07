@@ -461,6 +461,396 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
 
+  .controller("KTGCtrl", function($scope, Data, $ionicLoading, $http, $timeout, $cordovaFile, $ionicPopup) {
+    $scope.show = false;
+    var promise = Data.init();
+
+    $scope.selectedButton = 1;
+
+    // $scope.currentMonth = "";
+    promise.then(function(greeting) {
+      Data.updateAllData();
+      run("Анализ рентабельности по ТС");
+
+    }, function(reason) {
+      console.log(reason);
+    });
+
+
+    var run = function(preTit) {
+
+
+      $scope.colNames = Data.getColNames();
+      $scope.places = Data.getPlaces("янв");
+      $scope.monthes = Data.getMonthes();
+      $scope.currentMonth = $scope.monthes[0];
+      $scope.pretitle = preTit;
+      $scope.currentMonthIndex = 0;
+      $scope.utt = 'otk';
+
+      $scope.sortKey = 'name';
+      $scope.reverse = true;
+
+
+      $scope.sort = function(keyname) {
+        $scope.sortKey = keyname; //set the sortKey to the param passed
+        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+      };
+
+
+
+
+
+      $scope.height = screen.height / 36;
+
+      $scope.onClick = function(points, evt) {
+        $scope.places = Data.getPlaces($scope.monthes[points[1]._index]);
+        $scope.currentMonthIndex = points[1]._index;
+        $scope.currentMonth = $scope.monthes[points[1]._index];
+
+        // $scope.selectedItem = Data.getSingleData($scope.query.name, points[1]._index + 1, $scope.query.colName1, $scope.query.colName2);
+        // $scope.selectedItem["name"] = $scope.query.name;
+
+        $scope.$apply();
+      };
+
+      $scope.changeUTT = function(utt) {
+        Data.changeData(utt);
+        if (utt.includes("otk")) {
+          run($scope.pretitle);
+          $scope.utt = "otk";
+        } else if (utt.includes("data_mutt")) {
+          run($scope.pretitle);
+          $scope.utt = "data_mutt";
+        } else if (utt.includes("data_jutt")) {
+          run($scope.pretitle);
+          $scope.utt = "data_jutt";
+        } else if (utt.includes("data_butt")) {
+          run($scope.pretitle);
+          $scope.utt = "data_butt";
+        }
+
+      };
+
+      $scope.isLoading = false;
+
+
+      $scope.updateDatabase = function() {
+        //Data.updateData();
+
+        // console.log('isLoading ');
+        $scope.isLoading = true;
+
+        Data.updateDataHelper("");
+        setTimeout(function() {
+            Data.updateDataHelper("usluga");
+            setTimeout(function() {
+                Data.updateDataHelper("ceh");
+                setTimeout(function() {
+                    Data.updateDataHelper("statya");
+                }, 1000);
+            }, 1000);
+        }, 1000);
+
+        
+        
+        
+
+
+        setTimeout(function() {
+          Data.updateAllData();
+          setTimeout(function() {
+            run("Анализ рентабельности по ТС");
+            $scope.isLoading = false;
+            if (Data.getDownloaded() == true) {
+              $scope.showPopup();
+            } else {
+              $scope.showPopup2();
+            }
+
+            $scope.$apply();
+
+
+          }, 2000);
+        }, 4000);
+
+      };
+
+
+      $scope.showPopup = function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Обновление',
+            template: 'Данные обновлены!'
+          });
+      };
+
+      $scope.showPopup2 = function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Обновление',
+            template: 'Нет подключения к базе данных!'
+          });
+      };
+
+
+      $scope.updateData = function(name) {
+        $scope.result = Data.getNumbers(name);
+
+        $scope.data = [
+          $scope.result.r1,
+          $scope.result.r2,
+          $scope.result.r3,
+          $scope.result.r4
+        ];
+
+        angular.forEach($scope.places, function(value, key) {
+          if (value.name == name) {
+            $scope.selectedItem = {
+              "name": name,
+              "v1": value.v1,
+              "v2": value.v2,
+              "v3": value.v3,
+              "v4": value.v4,
+              "v5": value.v5,
+              "v6": value.v6,
+              "v7": value.v7,
+              "v8": value.v8,
+            }
+          }
+        }, null);
+
+
+        $scope.datasetOverride = [{
+          yAxisID: 'y-axis-1'
+        }, {
+          yAxisID: 'y-axis-2'
+        }];
+
+        $scope.options = {
+          scales: {
+            yAxes: [{
+                id: 'y-axis-1',
+                type: 'linear',
+                display: true,
+                position: 'left',
+                ticks: {
+                  callback: function(value, index, values) {
+                    var dasLabel = value / 1000000;
+                    return dasLabel;
+                  }
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: '(млн.)'
+                }
+              },
+              {
+                id: 'y-axis-2',
+                type: 'linear',
+                display: true,
+                position: 'right'
+              }
+            ]
+          },
+
+
+          "legend": {
+            "display": false,
+            "position": "top"
+          }
+
+        };
+
+      }
+
+      $scope.updateData($scope.places[0].name);
+
+      $scope.updateTS = function() {
+        $scope.selectedButton = 1;
+        Data.changeAllData('');
+        setTimeout(function() {
+          run("Анализ рентабельности по ТС");
+          $scope.$apply();
+        }, 10);
+      };
+
+      $scope.updateUsluga = function() {
+        $scope.selectedButton = 2;
+        Data.changeAllData('usluga');
+        setTimeout(function() {
+          run("Анализ рентабельности по услугам РУ");
+          $scope.$apply();
+        }, 10);
+      };
+
+      $scope.updateCeh = function() {
+        $scope.selectedButton = 3;
+        Data.changeAllData('ceh');
+        setTimeout(function() {
+          run("Анализ рентабельности по цехам");
+          $scope.$apply();
+        }, 10);
+      };
+
+      $scope.updateStatya = function() {
+        $scope.selectedButton = 4;
+        Data.changeAllData('statya');
+        setTimeout(function() {
+          run("Анализ рентабельности по статьям затрат");
+          $scope.$apply();
+        }, 10);
+      };
+
+
+
+      $scope.raw_selected = function(name) {
+        $scope.result = Data.getNumbers(name);
+        console.log($scope.result);
+        $scope.data = [
+          $scope.result.r1,
+          $scope.result.r2,
+          $scope.result.r3,
+          $scope.result.r4
+        ];
+
+        $scope.b1 = {
+          v1: $scope.result.r1[$scope.currentMonthIndex],
+          v2: $scope.result.r2[$scope.currentMonthIndex],
+          v3: $scope.result.r3[$scope.currentMonthIndex],
+          v4: $scope.result.r4[$scope.currentMonthIndex]
+        };
+
+        angular.forEach($scope.places, function(value, key) {
+          if (value.name == name) {
+            $scope.selectedItem = {
+              "name": name,
+              "v1": value.v1,
+              "v2": value.v2,
+              "v3": value.v3,
+              "v4": value.v4,
+              "v5": value.v5,
+              "v6": value.v6,
+              "v7": value.v7,
+              "v8": value.v8,
+            }
+          }
+        }, null);
+      }
+
+
+      $scope.result = Data.getNumbers($scope.places[0].name);
+
+      $scope.labels = $scope.monthes;
+
+      $scope.series = [$scope.colNames[3], $scope.colNames[3]];
+
+      $scope.data = [
+        $scope.result.r1,
+        $scope.result.r2,
+        $scope.result.r3,
+        $scope.result.r4
+      ];
+
+
+      $scope.b1 = {
+        v1: $scope.result.r1[$scope.currentMonthIndex],
+        v2: $scope.result.r2[$scope.currentMonthIndex],
+        v3: $scope.result.r3[$scope.currentMonthIndex],
+        v4: $scope.result.r4[$scope.currentMonthIndex]
+      };
+      // $scope.b2 = {
+      //     v1: $scope.result.r3[$scope.currentMonthIndex],
+      //     v2: $scope.result.r4[$scope.currentMonthIndex]
+      // };
+      // $scope.b3 = {
+      //     v1: $scope.result.r5[$scope.currentMonthIndex],
+      //     v2: $scope.result.r6[$scope.currentMonthIndex]
+      // };
+      // $scope.b4 = {
+      //     v1: $scope.result.r7[$scope.currentMonthIndex],
+      //     v2: $scope.result.r8[$scope.currentMonthIndex]
+      // };
+
+      //$scope.colors = ['#72C02C', '#3498DB', '#717984', '#F1C40F'];
+
+      $scope.colors = [{
+          backgroundColor: '#00cc00',
+          borderColor: '#00cc66',
+          hoverBackgroundColor: '#A2DED0',
+          hoverBorderColor: '#A2DED0'
+        },
+        {
+          backgroundColor: '#0066ff',
+          borderColor: '#3366ff',
+          hoverBackgroundColor: '#65C6BB',
+          hoverBorderColor: '#65C6BB'
+        },
+        {
+
+          borderColor: '#006600'
+        },
+        {
+          borderColor: '#0000cc'
+        },
+
+      ];
+
+
+      $scope.datasetOverride = [{
+        yAxisID: 'y-axis-1',
+        type: 'bar'
+      }, {
+        yAxisID: 'y-axis-1',
+        type: 'bar'
+      }, {
+        yAxisID: 'y-axis-2',
+        type: 'line'
+      }, {
+        yAxisID: 'y-axis-2',
+        type: 'line'
+      }];
+      $scope.options = {
+        scales: {
+          yAxes: [{
+              id: 'y-axis-1',
+              type: 'linear',
+              display: true,
+              position: 'left',
+              ticks: {
+                callback: function(value, index, values) {
+                  var dasLabel = value / 1000000;
+                  return dasLabel;
+                }
+              },
+              scaleLabel: {
+                display: true,
+                labelString: '(млн.)'
+              }
+            },
+            {
+              id: 'y-axis-2',
+              type: 'linear',
+              display: true,
+              position: 'right'
+            }
+          ]
+        },
+
+
+        "legend": {
+          "display": false,
+          "position": "top"
+        }
+
+      };
+
+
+      $scope.show = true;
+
+
+    }
+  })
+
+
   .controller('OcenkaCtrl', function($scope, NalogyData) {
     $scope.show = false;
     var promise = NalogyData.init();
