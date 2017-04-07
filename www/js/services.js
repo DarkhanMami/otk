@@ -487,4 +487,267 @@ angular.module('starter.services', ['ngCordova'])
         }
       }
     }
+})
+
+
+
+.factory('DataKIP', function ($http, $q, $cordovaFile) {
+    var monthes = [];
+    var colNames = [];
+    var places = [];
+    var fullData = {};
+    var smartData = {};
+
+    var downloaded = false;
+
+
+    var all_data = {};
+    all_data['KIP'] = {};
+
+
+
+    var currentMonth;
+    var currentMonthNum = "01";
+    var count = 0;
+
+    var asyncInit = function() {
+      // perform some asynchronous operation, resolve or reject the promise when appropriate.
+     
+      return $q(function(resolve, reject) {
+          
+          $http.get("/android_asset/www/KIP_data.json").success(function (response) {
+              all_data['KIP'] = response;
+
+              monthes = all_data['KIP']['monthes']['otk'];
+              fullData = all_data['KIP']['fullData']['otk'];
+              colNames = all_data['KIP']['colNames']['otk'];
+              places = all_data['KIP']['places']['otk'];
+              smartData = all_data['KIP']['smartData']['otk'];
+              currentMonth = monthes[0];
+              resolve("OK");
+          });
+
+
+      });
+
+      
+    }
+    return {
+        init: asyncInit,
+        setCurrentMonth: function(newMonth) {
+            for (k in monthes) {
+                if (monthes[k] == newMonth) {
+                    k = +k + 1;
+
+                    if (k < 10) {
+                        currentMonthNum = "0"+k;
+                    } else {
+                        currentMonthNum = ""+k;
+                    }
+                    break;
+
+                }
+            }
+
+            currentMonth = newMonth;
+        },
+
+        updateAllData: function(){
+              $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/KIP_data.json").then(function (response) {
+                  all_data['KIP'] = JSON.parse(response);
+
+                  monthes = all_data['KIP']['monthes']['otk'];
+                  fullData = all_data['KIP']['fullData']['otk'];
+                  colNames = all_data['KIP']['colNames']['otk'];
+                  places = all_data['KIP']['places']['otk'];
+                  smartData = all_data['KIP']['smartData']['otk'];
+                  currentMonth = monthes[0];
+
+              });
+
+
+        },
+
+        changeAllData: function(type){                   
+
+            monthes = all_data[type]['monthes']['otk'];
+            fullData = all_data[type]['fullData']['otk'];
+            colNames = all_data[type]['colNames']['otk'];
+            places = all_data[type]['places']['otk'];
+            smartData = all_data[type]['smartData']['otk'];
+            currentMonth = monthes[0];
+
+        },
+
+
+
+       updateDataHelper: function() {
+            downloaded = false;
+
+            $cordovaFile.checkDir(cordova.file.dataDirectory, "otk_data")
+            .then(function (success) {
+              // success
+            }, function (error) {
+                  $cordovaFile.createDir(cordova.file.dataDirectory, "otk_data", false)
+                      .then(function (success) {
+                      }, function (error) {
+                      });
+            });
+
+
+
+            $http.get("http://192.168.33.87:81/nova-api/get_KIP")
+            .success(function(data) {
+                downloaded = true;                  
+                $cordovaFile.removeFile(cordova.file.dataDirectory, "otk_data/KIP_data.json", true)
+                    .then(function (success) {
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/KIP_data.json", true)
+                          .then(function (success) {
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/KIP_data.json", data, true)
+                                .then(function (success) {
+                                    
+                                });
+                          });
+                    }, function (error) {                      
+                      $cordovaFile.createFile(cordova.file.dataDirectory, "otk_data/KIP_data.json", true)
+                          .then(function (success) {
+                            
+                            $cordovaFile.writeFile(cordova.file.dataDirectory, "otk_data/KIP_data.json", data, true)
+                                .then(function (success) {
+                                });
+                          }, function (error) { 
+                          });                      
+                    });
+            });
+
+       },
+
+
+
+        changeData: function(utt) {
+            monthes = all_data['KIP']['monthes'][utt];
+            fullData = all_data['KIP']['fullData'][utt];
+            colNames = all_data['KIP']['colNames'][utt];
+            places = all_data['KIP']['places'][utt];
+            smartData = all_data['KIP']['smartData'][utt];
+            currentMonth = monthes[0];
+        },
+
+        getCurrentMonth: function() {
+            return currentMonth;
+        },
+        getDownloaded: function() {
+            return downloaded;
+        },
+        getMonthes: function() {
+            return monthes;
+        },
+        getSingleData: function (name, day, colName1, colName2) {
+            if (day < 10) {
+                day = "0" + day
+            }
+            day = "" + day + "/"+currentMonthNum+"/2016"
+            var col1 = -1;
+            var col2 = -1;
+            for (k in colNames) {
+                if (colNames[k] == colName1) {
+                    col1 = k;
+                }
+                if (colNames[k] == colName2) {
+                    col2 = k;
+                }
+            }
+            if (col1 == -1 || col2 == -1) {
+                return {
+                    "code": 1,
+                    "message": "Wrong column names"
+                }
+            }
+
+            var obj = {
+                'v1': smartData[currentMonth + name + day][col1],
+                'v2': smartData[currentMonth + name + day][col2],
+            }
+            return obj;
+        },
+      
+      getPlaces: function (month) {
+          var result = [];
+
+          for (i in places) {
+              var p = places[i];
+              var key = month + p;
+              
+              if (key in smartData) {
+                  var obj = {
+                      'name': p,
+                      'v1': smartData[month + p][3],
+                      'v2': smartData[month + p][4],
+                      'v3': smartData[month + p][5],
+                      'v4': smartData[month + p][6],
+                      // 'v5': smartData[month + p][7],
+                      // 'v6': smartData[month + p][8],
+                      // 'v7': smartData[month + p][9],
+                      // 'v8': Math.round(smartData[month + p][11]),
+                  }
+              } else {
+                  var obj = {
+                      'name': p,
+                      'v1': 0,
+                      'v2': 0,
+                      'v3': 0,
+                      'v4': 0,
+                      // 'v5': 0,
+                      // 'v6': 0,
+                      // 'v7': 0,
+                      // 'v8': 0,
+                  }
+              }
+              result.push(obj)
+          }
+
+          return result;
+      },
+      getColNames: function() {
+
+          return colNames;
+      },
+      getNumbers: function(name) {
+        col = 3;
+
+        var r1 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var r2 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var r3 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var r4 = [null, null, null, null, null, null, null, null, null, null, null, null];
+        var m1 = 0;
+        var m2 = 0;
+        for (k in monthes) {
+          for (j in fullData[monthes[k]]) {
+            if (fullData[monthes[k]][j][0] == name) {
+                if (fullData[monthes[k]][j][2] == 2016) {
+                  r1[m1] = fullData[monthes[k]][j][4];
+                  r3[m1] = fullData[monthes[k]][j][6];
+                  r3[m1] = parseFloat(Math.round(r3[m1] * 100) / 100).toFixed(2);
+                  m1 = m1 + 1;
+                }
+                if (fullData[monthes[k]][j][2] == 2017) {
+                  r2[m2] = fullData[monthes[k]][j][4];
+                  r4[m1] = fullData[monthes[k]][j][6];
+                  r4[m1] = parseFloat(Math.round(r4[m1] * 100) / 100).toFixed(2);
+                  m2 = m2 + 1;
+                }
+                break;
+            }
+          }
+        }
+        return {
+            "code": 0,
+            "message": "SUCCESS",
+            "r1": r1,
+            "r2": r2,
+            "r3": r3,
+            "r4": r4
+        }
+      }
+    }
 });

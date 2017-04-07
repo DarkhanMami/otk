@@ -461,15 +461,15 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
 
-  .controller("KTGCtrl", function($scope, Data, $ionicLoading, $http, $timeout, $cordovaFile, $ionicPopup) {
+  .controller("KTGCtrl", function($scope, DataKIP, $ionicLoading, $http, $timeout, $cordovaFile, $ionicPopup) {
     $scope.show = false;
-    var promise = Data.init();
+    var promise = DataKIP.init();
 
     $scope.selectedButton = 1;
 
     // $scope.currentMonth = "";
     promise.then(function(greeting) {
-      Data.updateAllData();
+      DataKIP.updateAllData();
       run("Анализ рентабельности по ТС");
 
     }, function(reason) {
@@ -480,9 +480,9 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
     var run = function(preTit) {
 
 
-      $scope.colNames = Data.getColNames();
-      $scope.places = Data.getPlaces("янв");
-      $scope.monthes = Data.getMonthes();
+      $scope.colNames = DataKIP.getColNames();
+      $scope.places = DataKIP.getPlaces("янв");
+      $scope.monthes = DataKIP.getMonthes();
       $scope.currentMonth = $scope.monthes[0];
       $scope.pretitle = preTit;
       $scope.currentMonthIndex = 0;
@@ -504,18 +504,18 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       $scope.height = screen.height / 36;
 
       $scope.onClick = function(points, evt) {
-        $scope.places = Data.getPlaces($scope.monthes[points[1]._index]);
+        $scope.places = DataKIP.getPlaces($scope.monthes[points[1]._index]);
         $scope.currentMonthIndex = points[1]._index;
         $scope.currentMonth = $scope.monthes[points[1]._index];
 
-        // $scope.selectedItem = Data.getSingleData($scope.query.name, points[1]._index + 1, $scope.query.colName1, $scope.query.colName2);
+        // $scope.selectedItem = DataKIP.getSingleData($scope.query.name, points[1]._index + 1, $scope.query.colName1, $scope.query.colName2);
         // $scope.selectedItem["name"] = $scope.query.name;
 
         $scope.$apply();
       };
 
       $scope.changeUTT = function(utt) {
-        Data.changeData(utt);
+        DataKIP.changeData(utt);
         if (utt.includes("otk")) {
           run($scope.pretitle);
           $scope.utt = "otk";
@@ -536,21 +536,12 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
       $scope.updateDatabase = function() {
-        //Data.updateData();
+        //DataKIP.updateData();
 
         // console.log('isLoading ');
         $scope.isLoading = true;
 
-        Data.updateDataHelper("");
-        setTimeout(function() {
-            Data.updateDataHelper("usluga");
-            setTimeout(function() {
-                Data.updateDataHelper("ceh");
-                setTimeout(function() {
-                    Data.updateDataHelper("statya");
-                }, 1000);
-            }, 1000);
-        }, 1000);
+        DataKIP.updateDataHelper();
 
         
         
@@ -558,11 +549,11 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
         setTimeout(function() {
-          Data.updateAllData();
+          DataKIP.updateAllData();
           setTimeout(function() {
             run("Анализ рентабельности по ТС");
             $scope.isLoading = false;
-            if (Data.getDownloaded() == true) {
+            if (DataKIP.getDownloaded() == true) {
               $scope.showPopup();
             } else {
               $scope.showPopup2();
@@ -593,7 +584,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
       $scope.updateData = function(name) {
-        $scope.result = Data.getNumbers(name);
+        $scope.result = DataKIP.getNumbers(name);
 
         $scope.data = [
           $scope.result.r1,
@@ -666,7 +657,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
       $scope.updateTS = function() {
         $scope.selectedButton = 1;
-        Data.changeAllData('');
+        DataKIP.changeAllData('');
         setTimeout(function() {
           run("Анализ рентабельности по ТС");
           $scope.$apply();
@@ -675,7 +666,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
       $scope.updateUsluga = function() {
         $scope.selectedButton = 2;
-        Data.changeAllData('usluga');
+        DataKIP.changeAllData('usluga');
         setTimeout(function() {
           run("Анализ рентабельности по услугам РУ");
           $scope.$apply();
@@ -684,7 +675,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
       $scope.updateCeh = function() {
         $scope.selectedButton = 3;
-        Data.changeAllData('ceh');
+        DataKIP.changeAllData('ceh');
         setTimeout(function() {
           run("Анализ рентабельности по цехам");
           $scope.$apply();
@@ -693,7 +684,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
       $scope.updateStatya = function() {
         $scope.selectedButton = 4;
-        Data.changeAllData('statya');
+        DataKIP.changeAllData('statya');
         setTimeout(function() {
           run("Анализ рентабельности по статьям затрат");
           $scope.$apply();
@@ -703,7 +694,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
 
 
       $scope.raw_selected = function(name) {
-        $scope.result = Data.getNumbers(name);
+        $scope.result = DataKIP.getNumbers(name);
         console.log($scope.result);
         $scope.data = [
           $scope.result.r1,
@@ -737,7 +728,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       }
 
 
-      $scope.result = Data.getNumbers($scope.places[0].name);
+      $scope.result = DataKIP.getNumbers($scope.places[0].name);
 
       $scope.labels = $scope.monthes;
 
