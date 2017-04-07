@@ -516,8 +516,7 @@ angular.module('starter.services', ['ngCordova'])
       return $q(function(resolve, reject) {
           
           $http.get("/android_asset/www/KIP_data.json").success(function (response) {
-              all_data['KIP'] = response;
-
+              all_data['KIP'] = response['KIP'];
               monthes = all_data['KIP']['monthes']['otk'];
               fullData = all_data['KIP']['fullData']['otk'];
               colNames = all_data['KIP']['colNames']['otk'];
@@ -554,7 +553,7 @@ angular.module('starter.services', ['ngCordova'])
 
         updateAllData: function(){
               $cordovaFile.readAsText(cordova.file.dataDirectory, "otk_data/KIP_data.json").then(function (response) {
-                  all_data['KIP'] = JSON.parse(response);
+                  all_data['KIP'] = JSON.parse(response['KIP']);
 
                   monthes = all_data['KIP']['monthes']['otk'];
                   fullData = all_data['KIP']['fullData']['otk'];
@@ -712,8 +711,7 @@ angular.module('starter.services', ['ngCordova'])
 
           return colNames;
       },
-      getNumbers: function(name) {
-        col = 3;
+      getNumbers: function(name, type) {
 
         var r1 = [null, null, null, null, null, null, null, null, null, null, null, null];
         var r2 = [null, null, null, null, null, null, null, null, null, null, null, null];
@@ -721,24 +719,46 @@ angular.module('starter.services', ['ngCordova'])
         var r4 = [null, null, null, null, null, null, null, null, null, null, null, null];
         var m1 = 0;
         var m2 = 0;
-        for (k in monthes) {
-          for (j in fullData[monthes[k]]) {
-            if (fullData[monthes[k]][j][0] == name) {
-                if (fullData[monthes[k]][j][2] == 2016) {
-                  r1[m1] = fullData[monthes[k]][j][4];
-                  r3[m1] = fullData[monthes[k]][j][6];
-                  r3[m1] = parseFloat(Math.round(r3[m1] * 100) / 100).toFixed(2);
-                  m1 = m1 + 1;
+        if (type == 'den') {
+            for (k in monthes) {
+              for (j in fullData[monthes[k]]) {
+                if (fullData[monthes[k]][j][0] == name) {
+                    if (fullData[monthes[k]][j][2] == 2016) {
+                      r1[m1] = fullData[monthes[k]][j][4];
+                      r3[m1] = fullData[monthes[k]][j][6];
+                      r3[m1] = parseFloat(Math.round(r3[m1] * 100) / 100).toFixed(2);
+                      m1 = m1 + 1;
+                    }
+                    if (fullData[monthes[k]][j][2] == 2017) {
+                      r2[m2] = fullData[monthes[k]][j][4];
+                      r4[m1] = fullData[monthes[k]][j][6];
+                      r4[m1] = parseFloat(Math.round(r4[m1] * 100) / 100).toFixed(2);
+                      m2 = m2 + 1;
+                    }
+                    break;
                 }
-                if (fullData[monthes[k]][j][2] == 2017) {
-                  r2[m2] = fullData[monthes[k]][j][4];
-                  r4[m1] = fullData[monthes[k]][j][6];
-                  r4[m1] = parseFloat(Math.round(r4[m1] * 100) / 100).toFixed(2);
-                  m2 = m2 + 1;
-                }
-                break;
+              }
             }
-          }
+        } else if (type == '4as') {
+            for (k in monthes) {
+              for (j in fullData[monthes[k]]) {
+                if (fullData[monthes[k]][j][0] == name) {
+                    if (fullData[monthes[k]][j][2] == 2016) {
+                      r1[m1] = fullData[monthes[k]][j][3];
+                      r3[m1] = fullData[monthes[k]][j][5];
+                      r3[m1] = parseFloat(Math.round(r3[m1] * 100) / 100).toFixed(2);
+                      m1 = m1 + 1;
+                    }
+                    if (fullData[monthes[k]][j][2] == 2017) {
+                      r2[m2] = fullData[monthes[k]][j][3];
+                      r4[m1] = fullData[monthes[k]][j][5];
+                      r4[m1] = parseFloat(Math.round(r4[m1] * 100) / 100).toFixed(2);
+                      m2 = m2 + 1;
+                    }
+                    break;
+                }
+              }
+            }
         }
         return {
             "code": 0,

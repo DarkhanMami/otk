@@ -470,7 +470,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
     // $scope.currentMonth = "";
     promise.then(function(greeting) {
       DataKIP.updateAllData();
-      run("Анализ рентабельности по ТС");
+      run("Анализ КТГ/КИП по дням");
 
     }, function(reason) {
       console.log(reason);
@@ -487,6 +487,8 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       $scope.pretitle = preTit;
       $scope.currentMonthIndex = 0;
       $scope.utt = 'otk';
+
+      $scope.number_type = 'den';
 
       $scope.sortKey = 'name';
       $scope.reverse = true;
@@ -551,7 +553,7 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
         setTimeout(function() {
           DataKIP.updateAllData();
           setTimeout(function() {
-            run("Анализ рентабельности по ТС");
+            run("Анализ КТГ/КИП по дням");
             $scope.isLoading = false;
             if (DataKIP.getDownloaded() == true) {
               $scope.showPopup();
@@ -583,119 +585,127 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
       };
 
 
-      $scope.updateData = function(name) {
-        $scope.result = DataKIP.getNumbers(name);
+      $scope.updateData = function(name, type) {
+          $scope.result = DataKIP.getNumbers(name, type);
+          $scope.data = [
+            $scope.result.r1,
+            $scope.result.r2,
+            $scope.result.r3,
+            $scope.result.r4
+          ];
 
-        $scope.data = [
-          $scope.result.r1,
-          $scope.result.r2,
-          $scope.result.r3,
-          $scope.result.r4
-        ];
-
-        angular.forEach($scope.places, function(value, key) {
-          if (value.name == name) {
-            $scope.selectedItem = {
-              "name": name,
-              "v1": value.v1,
-              "v2": value.v2,
-              "v3": value.v3,
-              "v4": value.v4,
-              "v5": value.v5,
-              "v6": value.v6,
-              "v7": value.v7,
-              "v8": value.v8,
-            }
-          }
-        }, null);
-
-
-        $scope.datasetOverride = [{
-          yAxisID: 'y-axis-1'
-        }, {
-          yAxisID: 'y-axis-2'
-        }];
-
-        $scope.options = {
-          scales: {
-            yAxes: [{
-                id: 'y-axis-1',
-                type: 'linear',
-                display: true,
-                position: 'left',
-                ticks: {
-                  callback: function(value, index, values) {
-                    var dasLabel = value / 1000000;
-                    return dasLabel;
-                  }
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: '(млн.)'
-                }
-              },
-              {
-                id: 'y-axis-2',
-                type: 'linear',
-                display: true,
-                position: 'right'
+          angular.forEach($scope.places, function(value, key) {
+            if (value.name == name) {
+              $scope.selectedItem = {
+                "name": name,
+                "v1": value.v1,
+                "v2": value.v2,
+                "v3": value.v3,
+                "v4": value.v4,
+                // "v5": value.v5,
+                // "v6": value.v6,
+                // "v7": value.v7,
+                // "v8": value.v8,
               }
-            ]
-          },
+            }
+          }, null);
 
 
-          "legend": {
-            "display": false,
-            "position": "top"
-          }
+        //     $scope.colors = [{
+        //       backgroundColor: '#00cc00',
+        //       borderColor: '#00cc66',
+        //       hoverBackgroundColor: '#A2DED0',
+        //       hoverBorderColor: '#A2DED0'
+        //     },
+        //     {
+        //       backgroundColor: '#0066ff',
+        //       borderColor: '#3366ff',
+        //       hoverBackgroundColor: '#65C6BB',
+        //       hoverBorderColor: '#65C6BB'
+        //     },
+        //     {
 
-        };
+        //       borderColor: '#006600'
+        //     },
+        //     {
+        //       borderColor: '#0000cc'
+        //     },
+
+        //   ];
+
+
+        //   $scope.datasetOverride = [{
+        //     yAxisID: 'y-axis-1',
+        //     type: 'bar'
+        //   }, {
+        //     yAxisID: 'y-axis-1',
+        //     type: 'bar'
+        //   }, {
+        //     yAxisID: 'y-axis-2',
+        //     type: 'line'
+        //   }, {
+        //     yAxisID: 'y-axis-2',
+        //     type: 'line'
+        //   }];
+
+        // $scope.options = {
+        //   scales: {
+        //     yAxes: [{
+        //         id: 'y-axis-1',
+        //         type: 'linear',
+        //         display: true,
+        //         position: 'left'
+        //         // ticks: {
+        //         //   callback: function(value, index, values) {
+        //         //     var dasLabel = value / 1000000;
+        //         //     return dasLabel;
+        //         //   }
+        //         // },
+        //         // scaleLabel: {
+        //         //   display: true,
+        //         //   labelString: '(млн.)'
+        //         //}
+        //       },
+        //       {
+        //         id: 'y-axis-2',
+        //         type: 'linear',
+        //         display: true,
+        //         position: 'right'
+        //       }
+        //     ]
+        //   },
+
+
+        //   "legend": {
+        //     "display": false,
+        //     "position": "top"
+        //   }
+
+        // };
 
       }
 
-      $scope.updateData($scope.places[0].name);
+      $scope.updateData($scope.places[0].name, $scope.number_type);
 
       $scope.updateTS = function() {
         $scope.selectedButton = 1;
-        DataKIP.changeAllData('');
-        setTimeout(function() {
-          run("Анализ рентабельности по ТС");
-          $scope.$apply();
-        }, 10);
+        $scope.number_type = 'den';
+        $scope.updateData($scope.places[0].name, 'den');
+        $scope.pretitle = "Анализ КТГ/КИП по дням";
+        // $scope.$apply();
       };
 
       $scope.updateUsluga = function() {
         $scope.selectedButton = 2;
-        DataKIP.changeAllData('usluga');
-        setTimeout(function() {
-          run("Анализ рентабельности по услугам РУ");
-          $scope.$apply();
-        }, 10);
+        $scope.number_type = '4as';
+        $scope.updateData($scope.places[0].name, '4as');
+        $scope.pretitle = "Анализ КТГ/КИП по часам";
+        // $scope.$apply();
       };
-
-      $scope.updateCeh = function() {
-        $scope.selectedButton = 3;
-        DataKIP.changeAllData('ceh');
-        setTimeout(function() {
-          run("Анализ рентабельности по цехам");
-          $scope.$apply();
-        }, 10);
-      };
-
-      $scope.updateStatya = function() {
-        $scope.selectedButton = 4;
-        DataKIP.changeAllData('statya');
-        setTimeout(function() {
-          run("Анализ рентабельности по статьям затрат");
-          $scope.$apply();
-        }, 10);
-      };
-
 
 
       $scope.raw_selected = function(name) {
-        $scope.result = DataKIP.getNumbers(name);
-        console.log($scope.result);
+        $scope.result = DataKIP.getNumbers(name, $scope.number_type);
         $scope.data = [
           $scope.result.r1,
           $scope.result.r2,
@@ -718,17 +728,17 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
               "v2": value.v2,
               "v3": value.v3,
               "v4": value.v4,
-              "v5": value.v5,
-              "v6": value.v6,
-              "v7": value.v7,
-              "v8": value.v8,
+              // "v5": value.v5,
+              // "v6": value.v6,
+              // "v7": value.v7,
+              // "v8": value.v8,
             }
           }
         }, null);
       }
 
 
-      $scope.result = DataKIP.getNumbers($scope.places[0].name);
+      $scope.result = DataKIP.getNumbers($scope.places[0].name,'den');
 
       $scope.labels = $scope.monthes;
 
@@ -748,20 +758,6 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
         v3: $scope.result.r3[$scope.currentMonthIndex],
         v4: $scope.result.r4[$scope.currentMonthIndex]
       };
-      // $scope.b2 = {
-      //     v1: $scope.result.r3[$scope.currentMonthIndex],
-      //     v2: $scope.result.r4[$scope.currentMonthIndex]
-      // };
-      // $scope.b3 = {
-      //     v1: $scope.result.r5[$scope.currentMonthIndex],
-      //     v2: $scope.result.r6[$scope.currentMonthIndex]
-      // };
-      // $scope.b4 = {
-      //     v1: $scope.result.r7[$scope.currentMonthIndex],
-      //     v2: $scope.result.r8[$scope.currentMonthIndex]
-      // };
-
-      //$scope.colors = ['#72C02C', '#3498DB', '#717984', '#F1C40F'];
 
       $scope.colors = [{
           backgroundColor: '#00cc00',
@@ -805,17 +801,17 @@ angular.module('starter.controllers', ['chart.js', 'ngCordova'])
               id: 'y-axis-1',
               type: 'linear',
               display: true,
-              position: 'left',
-              ticks: {
-                callback: function(value, index, values) {
-                  var dasLabel = value / 1000000;
-                  return dasLabel;
-                }
-              },
-              scaleLabel: {
-                display: true,
-                labelString: '(млн.)'
-              }
+              position: 'left'
+              // ticks: {
+              //   callback: function(value, index, values) {
+              //     var dasLabel = value / 1000000;
+              //     return dasLabel;
+              //   }
+              // },
+              // scaleLabel: {
+              //   display: true,
+              //   labelString: '(млн.)'
+              // }
             },
             {
               id: 'y-axis-2',
